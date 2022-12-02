@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "363819011145",
+    "project_id": "finalcafeteriasystem",
+    "storage_bucket": "finalcafeteriasystem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363819011145:android:55deb81ea711a64690c398",
+        "android_client_info": {
+          "package_name": "com.example.gradutionfinalv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "363819011145-vnv40rlkbpsmnleohqgveg4j09dl8n0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC85E6Fly6HiOmU46V7UPU2ygGxy0xMOek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "363819011145-vnv40rlkbpsmnleohqgveg4j09dl8n0a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
