@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gradutionfinalv/widget/shopping_cart.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
-
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
@@ -10,8 +9,8 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("hello Cart"),
+    return Scaffold(
+      body: ShoppingCartWidget(),
     );
   }
 }

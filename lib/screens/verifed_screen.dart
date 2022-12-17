@@ -15,8 +15,8 @@ class Verifed extends StatefulWidget {
   final String email;
 
   const Verifed({
-    Key? key,
-    required this.email,
+    Key key,
+    this.email,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class Verifed extends StatefulWidget {
 class _VerifedState extends State<Verifed> {
   @override
   final formKey = GlobalKey<FormState>();
-  String? verifcationCode = "";
+  String verifcationCode = "";
   Widget build(BuildContext context) {
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
@@ -141,7 +141,7 @@ class _VerifedState extends State<Verifed> {
           activeFillColor: Colors.white,
         ),
         validator: (value) {
-          if (value!.isEmpty) {
+          if (value.isEmpty) {
             return "please enter the verifcation code ";
           } else if (value.length < 6) {
             return "The value sholud be complete";
@@ -167,7 +167,7 @@ class _VerifedState extends State<Verifed> {
 
         final isValid = formKey.currentState?.validate();
         if (isValid == true) {
-          formKey.currentState!.save();
+          formKey.currentState.save();
           final message =
               'Verifcation code: $verifcationCode\n Email: ${widget.email}';
 
@@ -199,31 +199,31 @@ class _VerifedState extends State<Verifed> {
     );
   }
 
-  Future<String> sendVerifcationCode(
-      {required String username,
-      required String major,
-      required String password,
-      required String email,
-      required String verifcationCode,
-      required String phonenumber,
-      required String name}) async {
-    var url = Uri.parse(
-        'http://192.168.0.189:8080/api/check/smsCode/{{$verifcationCode}}');
-    print("object----asdas--------------------");
-    http.Response response = await http.post(url,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json.encode(<String, String>{
-          "username": username,
-          "password": password,
-          "verifcationCode": verifcationCode,
-          "email": email,
-          "phoneNumber": phonenumber,
-          "name": name,
-          "major": major,
-        }));
+  // Future<String> sendVerifcationCode(
+  //     { String username,
+  //      String major,
+  //      String password,
+  //      String email,
+  //      String verifcationCode,
+  //      String phonenumber,
+  //      String name}) async {
+  //   var url = Uri.parse(
+  //       'http://192.168.0.189:8080/api/check/smsCode/{{$verifcationCode}}');
+  //   print("object----asdas--------------------");
+  //   http.Response response = await http.post(url,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: json.encode(<String, String>{
+  //         "username": username,
+  //         "password": password,
+  //         "verifcationCode": verifcationCode,
+  //         "email": email,
+  //         "phoneNumber": phonenumber,
+  //         "name": name,
+  //         "major": major,
+  //       }));
 
-    return "meso";
-  }
+  //   return "meso";
+  // }
 }

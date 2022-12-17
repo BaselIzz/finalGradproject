@@ -1,34 +1,34 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gradutionfinalv/constants/controllers.dart';
+import 'package:gradutionfinalv/controllers/authController.dart';
+import 'package:gradutionfinalv/screens/login_screen.dart';
 import 'package:gradutionfinalv/screens/verifed_screen.dart';
+import 'package:gradutionfinalv/widget/custom_text_from_field.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import '../values/values.dart';
 import '../widget/dark_overlay.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:math';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
-
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  String? resposeResult = "";
+  String resposeResult = "";
   bool isPasswordVisible = true;
-  String? password = "";
-  String? email = "";
-  String? phone = "";
-  String? username = "";
-  String? name = "";
-  String? verifcationCode = "";
+  String password = "";
+  String email = "";
+  String phone = "";
+  String username = "";
+  String name = "";
+  String verifcationCode = "";
   final formKey = GlobalKey<FormState>();
   final items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
-  String? selection;
+  String selection;
   @override
   Widget build(BuildContext context) {
     var heightOfScreen = MediaQuery.of(context).size.height;
@@ -101,10 +101,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           onTap: (() {
             final isValid = formKey.currentState?.validate();
             if (isValid == true) {
-              formKey.currentState!.save();
+              formKey.currentState.save();
+              userController.signUp();
 
-              verifcationCode = getRandString(6);
-              verifcationCode = verifcationCode!.substring(1, 7);
+              // verifcationCode = getRandString(6);
+              // verifcationCode = verifcationCode!.substring(1, 7);
 
               // createrCustomer(
               //         username: username.toString(),
@@ -119,18 +120,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               //   resposeResult = value;
               // });
 
-              SendEmail(
-                  name: name.toString(),
-                  email: email.toString(),
-                  subject: "VerifcationCode",
-                  message: verifcationCode.toString());
+              //   SendEmail(
+              //       name: name.toString(),
+              //       email: email.toString(),
+              //       subject: "VerifcationCode",
+              //       message: verifcationCode.toString());
 
-              print(resposeResult?.contains("ok"));
+              //   print(resposeResult?.contains("ok"));
             }
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => Verifed(
-                      email: email.toString(),
-                    )));
           }),
           child: Container(
             width: 300,
@@ -151,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         SizedBox(height: 60.0),
         InkWell(
           onTap: () {
-            Navigator.of(context).pop();
+            Get.offAll(LoginScreen());
           },
           child: Container(
             width: 200,
@@ -194,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         String regxexxx = r'^(?:[+0][1-9])?[0-9]{10,12}$';
         RegExp regExp = new RegExp(regxexxx);
 
-        if (p0!.isEmpty) {
+        if (p0.isEmpty) {
           return 'Enter your PhoneNumber';
         } else if (regExp.hasMatch(p0)) {
           return 'Enter a valid Phonenumber';
@@ -249,7 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return TextFormField(
       onSaved: (value) => setState(() => username = value),
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           return 'Enter your username';
         }
         return null;
@@ -297,168 +294,72 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _buildName() {
-    return TextFormField(
+    return CustomTextFormField(
       autofillHints: [AutofillHints.name],
-      onSaved: (value) => setState(() => name = value),
+      // onSaved: (value) => setState(() => name = value),
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           return 'Enter your Name';
         }
         return null;
       },
-      style: Styles.normalTextStyle,
-      maxLines: 1,
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        prefixIcon: Icon(Icons.person),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 0,
-          vertical: 22,
-        ),
-        hintText: "Name",
-        hintStyle: Styles.normalTextStyle,
-        filled: true,
-        fillColor: AppColors.fillColor,
-      ),
-      obscureText: false,
+      icon: Icon(Icons.person),
+      hintText: "Name",
+      hasPrefixIcon: true,
+      obscured: false,
+      controller: userController.name,
     );
   }
 
   Widget _buildPassowrd() {
-    return TextFormField(
-      onSaved: (newValue) => setState(() => password = newValue),
+    return CustomTextFormField(
+      autofillHints: [AutofillHints.email],
+      icon: Icon(Icons.key),
+      controller: userController.password,
+      hasPrefixIcon: true,
+      //  onSaved: (newValue) => setState(() => password = newValue),
       validator: (newvalue) {
-        if (newvalue!.length < 7) {
-          return "Password must be at least 7 characters long";
+        const pattern =
+            r'(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,18}$)';
+        final regExp = RegExp(pattern);
+        if (newvalue.isEmpty) {
+          return 'please enter a password';
+        } else if (!regExp.hasMatch(newvalue)) {
+          return "your password mush have captal and number";
+        } else {
+          return null;
         }
-        return null;
       },
-      style: Styles.normalTextStyle,
-      maxLines: 1,
-      decoration: InputDecoration(
-        suffixIcon: IconButton(
-          icon: !isPasswordVisible
-              ? Icon(Icons.visibility)
-              : Icon(Icons.visibility_off),
-          onPressed: () =>
-              setState(() => isPasswordVisible = !isPasswordVisible),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        prefixIcon: Icon(Icons.key),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 0,
-          vertical: 22,
-        ),
-        hintText: "Password",
-        hintStyle: Styles.normalTextStyle,
-        filled: true,
-        fillColor: AppColors.fillColor,
-      ),
-      obscureText: isPasswordVisible,
+      maxLength: 18,
+      hintText: "Password",
+      filled: true,
+      fillColor: AppColors.fillColor,
+
+      obscured: isPasswordVisible,
     );
   }
 
   Widget _buildemail() {
-    return TextFormField(
+    return CustomTextFormField(
       autofillHints: [AutofillHints.email],
-      onSaved: (value) => setState(() => email = value),
+      // onSaved: (value) => setState(() => email = value),
       validator: (value) {
-        const pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
+        const pattern =
+            r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+edu";
         final regExp = RegExp(pattern);
 
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           return 'Enter your university email';
         } else if (!regExp.hasMatch(value)) {
           return 'Enter a valid university email';
         }
         return null;
       },
-      style: Styles.normalTextStyle,
-      maxLines: 1,
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        prefixIcon: Icon(Icons.email),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 0,
-          vertical: 22,
-        ),
-        hintText: "Email",
-        hintStyle: Styles.normalTextStyle,
-        filled: true,
-        fillColor: AppColors.fillColor,
-      ),
-      obscureText: false,
+      hintText: "Email",
+      icon: Icon(Icons.email),
+      hasPrefixIcon: true,
+      controller: userController.email,
+      obscured: false,
     );
   }
 
@@ -490,21 +391,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 48),
       child: Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         key: formKey,
         child: Column(children: <Widget>[
-          _buildDropdownlist(),
-          SizedBox(
-            height: 20,
-          ),
+          // _buildDropdownlist(),
+          // SizedBox(
+          //   height: 20,
+          // ),
           //_buildUsername(),
           //  SizedBox(
           //  height: 16,
           // ),
           _buildName(),
-          SizedBox(
-            height: 16,
-          ),
-          _buildPhonenumber(),
+          // SizedBox(
+          //   height: 16,
+          // ),
+          // _buildPhonenumber(),
           SizedBox(
             height: 16,
           ),
@@ -518,91 +420,91 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Future<String> createrCustomer(
-      {required String username,
-      required String major,
-      required String password,
-      required String email,
-      required String verifcationCode,
-      required String phonenumber,
-      required String name}) async {
-    var url = Uri.parse('http://192.168.0.189:8080/api/save/customer');
-    print("object----asdas--------------------");
-    http.Response response = await http.post(url,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json.encode(<String, String>{
-          "username": username,
-          "password": password,
-          "verifcationCode": verifcationCode,
-          "email": email,
-          "phoneNumber": phonenumber,
-          "name": name,
-          "major": major,
-        }));
+  // Future<String> createrCustomer(
+  //     {required String username,
+  //     required String major,
+  //     required String password,
+  //     required String email,
+  //     required String verifcationCode,
+  //     required String phonenumber,
+  //     required String name}) async {
+  //   var url = Uri.parse('http://192.168.0.189:8080/api/save/customer');
+  //   print("object----asdas--------------------");
+  //   http.Response response = await http.post(url,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: json.encode(<String, String>{
+  //         "username": username,
+  //         "password": password,
+  //         "verifcationCode": verifcationCode,
+  //         "email": email,
+  //         "phoneNumber": phonenumber,
+  //         "name": name,
+  //         "major": major,
+  //       }));
 
-    print(
-        "object+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+  //   print(
+  //       "object+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
-    if (response.body.toString() == "ok") {
-      final message = 'Successfull';
-      final snackBar = SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(fontSize: 20),
-        ),
-        backgroundColor: Colors.green,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    } else {
-      final message = 'this email is already registert';
-      final snackBar = SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(fontSize: 20),
-        ),
-        backgroundColor: Colors.red,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+  //   if (response.body.toString() == "ok") {
+  //     final message = 'Successfull';
+  //     final snackBar = SnackBar(
+  //       content: Text(
+  //         message,
+  //         style: const TextStyle(fontSize: 20),
+  //       ),
+  //       backgroundColor: Colors.green,
+  //     );
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //   } else {
+  //     final message = 'this email is already registert';
+  //     final snackBar = SnackBar(
+  //       content: Text(
+  //         message,
+  //         style: const TextStyle(fontSize: 20),
+  //       ),
+  //       backgroundColor: Colors.red,
+  //     );
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //   }
 
-    return response.body.toString();
-  }
+  //   return response.body.toString();
+  // }
 
-  Future SendEmail({
-    required String name,
-    required String email,
-    required String subject,
-    required String message,
-  }) async {
-    final serviceId = 'service_zez769j';
-    final templateid = 'template_fti765m';
-    final userId = 'VVeXoWCl-kuUPi7gn';
-    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
-    final response = await http.post(
-      url,
-      headers: {
-        'origin': 'http://localhost',
-        'Content-Type': 'application/json',
-      },
-      body: json.encode({
-        'service_id': serviceId,
-        'template_id': templateid,
-        'user_id': userId,
-        'template_params': {
-          'user_name': name,
-          'user_email': email,
-          'user_subject': subject,
-          'user_message': message,
-        },
-      }),
-    );
-  }
+  // Future SendEmail({
+  //   required String name,
+  //   required String email,
+  //   required String subject,
+  //   required String message,
+  // }) async {
+  //   final serviceId = 'service_zez769j';
+  //   final templateid = 'template_fti765m';
+  //   final userId = 'VVeXoWCl-kuUPi7gn';
+  //   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+  //   final response = await http.post(
+  //     url,
+  //     headers: {
+  //       'origin': 'http://localhost',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: json.encode({
+  //       'service_id': serviceId,
+  //       'template_id': templateid,
+  //       'user_id': userId,
+  //       'template_params': {
+  //         'user_name': name,
+  //         'user_email': email,
+  //         'user_subject': subject,
+  //         'user_message': message,
+  //       },
+  //     }),
+  //   );
+  // }
 
-  String getRandString(int len) {
-    var random = Random.secure();
-    var values = List<int>.generate(len, (i) => random.nextInt(255));
-    return base64UrlEncode(values);
-  }
+  // String getRandString(int len) {
+  //   var random = Random.secure();
+  //   var values = List<int>.generate(len, (i) => random.nextInt(255));
+  //   return base64UrlEncode(values);
+  // }
 }

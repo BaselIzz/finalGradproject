@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gradutionfinalv/controllers/caffetria_controller.dart';
 
 import '../controllers/appController.dart';
 import '../controllers/authController.dart';
+import '../controllers/cart_controller.dart';
+import '../controllers/product_controller.dart';
 
 AppController appController = AppController.instance;
-// UserController userController = UserController.instance;
+UserController userController = UserController.instance;
 //CategoryController categoryController = CategoryController.instance;
-//ProductsController productsController = ProductsController.instace;
-//CartController cartController = CartController.instance;
+ProductsController productsController = ProductsController.instace;
+CartController cartController = CartController.instance;
+CaffetriaController caffetriaController = CaffetriaController.instace;

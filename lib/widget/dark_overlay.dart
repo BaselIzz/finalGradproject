@@ -4,8 +4,8 @@ import '../values/values.dart';
 
 class DarkOverLay extends StatelessWidget {
   final Gradient gradient;
-  final double? height;
-  final double? width;
+  final double height;
+  final double width;
 
   DarkOverLay({
     this.gradient = Gradients.footerOverlayGradient,

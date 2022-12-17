@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../values/values.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final TextStyle? textFormFieldStyle;
-  final TextStyle? hintTextStyle;
+  final TextStyle textFormFieldStyle;
+  final TextStyle hintTextStyle;
   final BorderStyle borderStyle;
   final double borderRadius;
   final double borderWidth;
   final double contentPaddingHorizontal;
   final double contentPaddingVertical;
-  final String? prefixIconImagePath;
+  final String prefixIconImagePath;
   final String hintText;
   final Color prefixIconColor;
   final Color borderColor;
@@ -21,10 +21,20 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscured;
   final bool hasPrefixIcon;
   final int maxLines;
-  final Icon? icon;
+  final Icon icon;
+  final String Function(String) validator;
+  final String Function(String) onsave;
+  final TextEditingController controller;
+  Iterable<String> autofillHints;
+  int maxLength;
 
   CustomTextFormField({
     this.icon,
+    this.maxLength,
+    this.autofillHints,
+    this.controller,
+    this.validator,
+    this.onsave,
     this.hasPrefixIcon = false,
     this.prefixIconImagePath,
     this.maxLines = 1,
@@ -35,7 +45,7 @@ class CustomTextFormField extends StatelessWidget {
     this.borderWidth = Sizes.WIDTH_0,
     this.contentPaddingHorizontal = Sizes.PADDING_0,
     this.contentPaddingVertical = Sizes.PADDING_22,
-    this.hintText = "",
+    this.hintText,
     this.prefixIconColor = AppColors.secondaryText,
     this.borderColor = AppColors.greyShade1,
     this.focusedBorderColor = AppColors.greyShade1,
@@ -49,6 +59,10 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: TextFormField(
+        maxLength: maxLength,
+        validator: validator,
+        onSaved: onsave,
+        controller: controller,
         style: textFormFieldStyle,
         maxLines: maxLines,
         decoration: InputDecoration(
@@ -91,10 +105,10 @@ class CustomTextFormField extends StatelessWidget {
     );
   }
 
-  Widget? prefixImage() {
+  Widget prefixImage() {
     if (prefixIconImagePath != null) {
       return ImageIcon(
-        AssetImage(prefixIconImagePath!),
+        AssetImage(prefixIconImagePath),
         color: prefixIconColor,
       );
     }

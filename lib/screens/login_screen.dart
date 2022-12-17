@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import 'package:gradutionfinalv/controllers/authController.dart';
+import '../constants/controllers.dart';
+import '../widget/custom_text_from_field.dart';
 import '../widget/dark_overlay.dart';
 import 'register_screen.dart';
 import 'main_screen.dart';
@@ -9,16 +13,14 @@ import '../values/values.dart';
 import '../widget/custom_page_route.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordVisible = true;
-  String? password = "";
-  String? Email = "";
+  // String? password = "";
+  // String? Email = "";
 
   final formKey = GlobalKey<FormState>();
   @override
@@ -94,66 +96,33 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildemail() {
-    return TextFormField(
-      onSaved: (value) => setState(() => Email = value),
+    return CustomTextFormField(
+      autofillHints: [AutofillHints.email],
       validator: (value) {
         const pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
         final regExp = RegExp(pattern);
 
-        if (value!.isEmpty) {
+        if (value.isEmpty) {
           return 'Enter your university email';
-        } else if (!regExp.hasMatch(value)) {
-          return 'Enter a valid university email';
+          // } else if (!regExp.hasMatch(value)) {
+          //   return 'Enter a valid university email';
         }
         return null;
       },
-      style: Styles.normalTextStyle,
-      maxLines: 1,
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.greyShade1,
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        prefixIcon: Icon(Icons.email),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 0,
-          vertical: 22,
-        ),
-        hintText: "Email",
-        hintStyle: Styles.normalTextStyle,
-        filled: true,
-        fillColor: AppColors.fillColor,
-      ),
-      obscureText: false,
+      hintText: "Email",
+      obscured: false,
+      controller: userController.email,
+      icon: Icon(Icons.email),
+      hasPrefixIcon: true,
     );
   }
 
   Widget _buildpassowrd() {
     return TextFormField(
-      onSaved: (newValue) => setState(() => password = newValue),
+      controller: userController.password,
+      //onSaved: (newValue) => setState(() => password = newValue),
       validator: (newvalue) {
-        if (newvalue!.length < 7) {
+        if (newvalue.length < 7) {
           return "Password must be at least 7 characters long";
         }
         return null;
@@ -228,22 +197,23 @@ class _LoginScreenState extends State<LoginScreen> {
       children: <Widget>[
         InkWell(
           onTap: (() {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => MainScreen()));
+            // Navigator.of(context)
+            //     .push(MaterialPageRoute(builder: (context) => MainScreen()));
 
-            // final isValid = formKey.currentState?.validate();
-            // if (isValid == true) {
-            //   formKey.currentState!.save();
-            //   final message = '\nPassword: $password\nEmail: $Email';
-            //   final snackBar = SnackBar(
-            //     content: Text(
-            //       message,
-            //       style: const TextStyle(fontSize: 20),
-            //     ),
-            //     backgroundColor: Colors.green,
-            //   );
-            //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            // }
+            final isValid = formKey.currentState.validate();
+            if (isValid == true) {
+              formKey.currentState.save();
+              userController.signIn();
+              //   final message = '\nPassword: $password\nEmail: $Email';
+              //   final snackBar = SnackBar(
+              //     content: Text(
+              //       message,
+              //       style: const TextStyle(fontSize: 20),
+              //     ),
+              //     backgroundColor: Colors.green,
+              //   );
+              //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
           }),
           child: Container(
             width: 300,
@@ -264,9 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
         SizedBox(height: 60.0),
         InkWell(
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const RegisterScreen()),
-            );
+            Get.to(RegisterScreen());
           },
           child: Container(
             width: 175,
