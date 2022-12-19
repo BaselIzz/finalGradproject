@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/firebase.dart';
 import 'package:gradutionfinalv/controllers/cart_controller.dart';
+import 'package:gradutionfinalv/controllers/orderController.dart';
 import 'package:gradutionfinalv/controllers/product_controller.dart';
 
 import 'app.dart';
@@ -18,6 +19,7 @@ void main() async {
     Get.put(CaffetriaController());
     Get.put(ProductsController());
     Get.put(CartController());
+    Get.put(OrderController());
   });
 
   runApp(App());

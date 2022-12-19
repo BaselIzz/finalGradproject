@@ -47,4 +47,13 @@ class CartItemModel {
         PRICE: (price).toString(),
         Caffeteria_ID: cafeteriaId,
       };
+  Map toJsonOreder() => {
+        ID: id,
+        PRODUCT_ID: productId,
+        IMAGE: image,
+        NAME: name,
+        QUANTITY: quantity,
+        COST: ((price * quantity)).toString(),
+      };
+  getcafeteriaid() => cafeteriaId;
 }

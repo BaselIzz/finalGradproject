@@ -79,7 +79,7 @@ class FoodyBiteCard extends StatelessWidget {
                                 fontSize: Sizes.TEXT_SIZE_20,
                               ),
                             ),
-                            SizedBox(width: Sizes.WIDTH_4),
+                            //          SizedBox(width: Sizes.WIDTH_4),
                             // CardTags(
                             //   title: caffeteria.name,
                             //   decoration: BoxDecoration(

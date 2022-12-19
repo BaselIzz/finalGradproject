@@ -5,10 +5,10 @@ class CafeteriaModel {
   static const ID = "id";
   static const NAME = "name";
   static const EMAIL = "email";
-  static const MENU = "menu";
+  // static const MENU = "menu";
   static const IS_ACTIVE = "is_Active";
-  static const DESCREPTION = "descreption";
-  static const VENDORS = "vendor";
+  // static const DESCREPTION = "descreption";
+  //static const VENDORS = "vendor";
 
   String cafeteriaId;
   String cafeteriaName;
@@ -19,8 +19,12 @@ class CafeteriaModel {
   // List<VendorModel> vendors;
   String email;
 
-  CafeteriaModel(this.cafeteriaId, this.cafeteriaName, this.email, this.hasuser,
-      this.is_Active);
+  CafeteriaModel(
+      {this.cafeteriaId,
+      this.cafeteriaName,
+      this.email,
+      this.hasuser,
+      this.is_Active});
 
   CafeteriaModel.fromSnapshot(Map<String, dynamic> data) {
     cafeteriaName = data[NAME];

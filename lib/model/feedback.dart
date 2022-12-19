@@ -1,13 +1,14 @@
 class FeedBack {
-  String _feedback_id;
+  String feedback_id;
 
   String customer_id;
 
-  String _feedback_text;
+  String feedback_text;
 
-  String _feedbacker;
+  String feedbacker;
 
-  FeedBack();
+  FeedBack(
+      this.customer_id, this.feedback_id, this.feedback_text, this.feedbacker);
 
   // get feedback_id => _feedback_id;
 
