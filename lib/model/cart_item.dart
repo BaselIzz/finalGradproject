@@ -55,5 +55,4 @@ class CartItemModel {
         QUANTITY: quantity,
         COST: ((price * quantity)).toString(),
       };
-  getcafeteriaid() => cafeteriaId;
 }
