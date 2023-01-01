@@ -9,15 +9,17 @@ import 'package:gradutionfinalv/model/order.dart';
 
 import 'orderWidgetnew.dart';
 
-class Orderwidget extends StatelessWidget {
-  const Orderwidget({Key key}) : super(key: key);
+class OrderWidget extends StatelessWidget {
+  const OrderWidget({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => ListView(
-          children: orderController.orders
-              .map((orderModel order) => Orderwidgetnew(order))
-              .toList(),
-        ));
+        scrollDirection: Axis.vertical,
+        children: orderController.orders
+            .where((p0) => p0.status == "Done")
+            .map((orderModel order) {
+          return Orderwidgetnew(order);
+        }).toList()));
   }
 }

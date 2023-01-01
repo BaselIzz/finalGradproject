@@ -16,6 +16,14 @@ class VendorScreen extends StatelessWidget {
     var widthOfScreen = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Row(
+            children: [
+              Text("Sort By date "),
+              IconButton(icon: Icon(Icons.more_horiz), onPressed: () {})
+            ],
+          )
+        ],
         title: Center(
           child: Text(
             "Vendor",
@@ -24,6 +32,7 @@ class VendorScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
       ),
+
       // drawer: Drawer(
       //   child: ListView(
       //     children: [
@@ -47,7 +56,7 @@ class VendorScreen extends StatelessWidget {
       //     // ],
       //   ),
 
-      body: Orderwidget(),
+      body: OrderWidget(),
     );
   }
 }

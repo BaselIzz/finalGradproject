@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:gradutionfinalv/screens/addmanger_Screen.dart';
 import 'package:gradutionfinalv/screens/vendor_screen.dart';
 import 'package:gradutionfinalv/widget/addCaffeteriawidget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -21,7 +22,7 @@ class AdminScreen extends StatelessWidget {
       appBar: AppBar(
         title: Center(
           child: Text(
-            "Admin",
+            "Caffetria",
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -59,23 +60,23 @@ class AdminScreen extends StatelessWidget {
               ),
               title: Text("MANGER"),
             ),
-            ListTile(
-              onTap: () {
-                print("__________________________________Signout");
-                showBarModalBottomSheet(
-                    context: context,
-                    builder: (context) => Container(
-                          color: Colors.white,
-                          child: AddcafeteriaWidget(),
-                        ));
-                // userController.signOut();
-              },
-              leading: Icon(
-                Icons.add,
-                color: Colors.black87,
-              ),
-              title: Text("Caffeteria"),
-            ),
+            // ListTile(
+            //   onTap: () {
+            //     print("__________________________________Signout");
+            //     showBarModalBottomSheet(
+            //         context: context,
+            //         builder: (context) => Container(
+            //               color: Colors.white,
+            //               child: AddcafeteriaWidget(),
+            //             ));
+            //     // userController.signOut();
+            //   },
+            //   leading: Icon(
+            //     Icons.add,
+            //     color: Colors.black87,
+            //   ),
+            //   title: Text("Caffeteria"),
+            // ),
             ListTile(
               onTap: () {
                 Get.to(VendorScreen());
@@ -85,6 +86,16 @@ class AdminScreen extends StatelessWidget {
                 color: Colors.black87,
               ),
               title: Text("Vendor"),
+            ),
+            ListTile(
+              onTap: () {
+                Get.offAll(AddMangerScreen());
+              },
+              leading: Icon(
+                Icons.add,
+                color: Colors.black87,
+              ),
+              title: Text("Add manger"),
             )
           ],
         ),
