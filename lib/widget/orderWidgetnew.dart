@@ -17,8 +17,6 @@ import 'package:gradutionfinalv/widget/custom_text.dart';
 
 import 'orderwidgetshow.dart';
 
-var devicetoken = " ";
-
 TextEditingController username = TextEditingController();
 TextEditingController title = TextEditingController();
 TextEditingController body = TextEditingController();
@@ -32,6 +30,8 @@ class Orderwidgetnew extends StatefulWidget {
 }
 
 class _OrderwidgetnewState extends State<Orderwidgetnew> {
+  var deviceToken = " ";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -120,9 +120,9 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
         ),
         ElevatedButton(
             onPressed: () {
-              getToken();
-              sendPushMessage(devicetoken, "hello wrold", "hello");
-              showDoneDialog();
+              // getToken();
+              sendPushMessage(deviceToken, "hello wrold", "hello");
+              // showDoneDialog();
               // FirebaseMessaging.onMessage.listen((event) {
               //   print("hello");
               //   //  print(event.data.toString());
@@ -134,44 +134,30 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
     );
   }
 
-  Future showDoneDialog() async {
-    await FirebaseMessaging.onMessage.listen(
-      (event) => print("hhhhhhhafdadsadsad${event.notification.body}"),
-    );
-  }
-
-  Future saveToken(String token) async {
-    await firebaseFirestore
-        .collection("UserTokens")
-        .doc(widget.order.userid)
-        .set({
-      'token': token,
-    });
-  }
-
-  Future getToken() async {
-    await FirebaseMessaging.instance.getToken().then((token) {
-      setState(() {
-        devicetoken = token;
-      });
-
-      print("my token is $devicetoken");
-
-      saveToken(devicetoken);
-    });
-  }
-
   @override
   void initState() {
-    getToken();
+    super.initState();
+    getDeviceToken(widget.order.userid);
+
     // initInfo();
+  }
+
+  Future getDeviceToken(String userId) async {
+    firebaseFirestore
+        .collection("UserTokens")
+        .doc(userId)
+        .get()
+        .then((value) => deviceToken = value.get('token'));
   }
 
   void sendPushMessage(String token, String body, String title) async {
     var serverToken =
-        "AAAAVLVNjEk:APA91bFMsqbKv-APFbkmDJ3EIdpPrXCBDVaw2ZBVfiWmcq63vdZjQMa5ALAC_xZagCCEbpJEfPnpngSd6253zdNI6tt9nq6bxw0XpkYGK8LB2EzneH4oZCvuzOH_t7Y1i0WXrHqZBfyA";
+        "AAAAVLVNjEk:APA91bGVcOv-6S0OwzCBKD4eG20OD3W8zOXxTfCSeVIBtl6Sce7Pe4OcNkSV3jxhQ9XDB6Ix43jGdfrtJ3yRZUi1yppHAikqs_FkKGb1nJZebEp-na50STJf2I04XGbEpDdR2tPRnRjM";
     try {
-      final r = await http.post(
+      await http.post(
+        //finalcafeteriasystem
+        //https://fcm.googleapis.com/fcm/send
+        //https://fcm.googleapis.com/v1/projects/finalcafeteriasystem/messages:send
         Uri.parse("https://fcm.googleapis.com/fcm/send"),
         headers: <String, String>{
           "Content-Type": 'application/json',
@@ -189,15 +175,10 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
               'id': '1',
               'status': "done",
             },
-            "to": serverToken
+            "to": token,
           },
         ),
       );
-      if (r.statusCode == 200) {
-        print("send__________________");
-      }
-      print(
-          "_______________________________________${r.statusCode.toString()}");
     } catch (e) {
       if (kDebugMode) {
         print("error push notification");
@@ -207,7 +188,7 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
 
   void sendMessageForAllusers(String body, String title) async {
     var serverToken =
-        "AAAAVLVNjEk:APA91bFMsqbKv-APFbkmDJ3EIdpPrXCBDVaw2ZBVfiWmcq63vdZjQMa5ALAC_xZagCCEbpJEfPnpngSd6253zdNI6tt9nq6bxw0XpkYGK8LB2EzneH4oZCvuzOH_t7Y1i0WXrHqZBfyA";
+        "AAAAVLVNjEk:APA91bGVcOv-6S0OwzCBKD4eG20OD3W8zOXxTfCSeVIBtl6Sce7Pe4OcNkSV3jxhQ9XDB6Ix43jGdfrtJ3yRZUi1yppHAikqs_FkKGb1nJZebEp-na50STJf2I04XGbEpDdR2tPRnRjM";
     try {
       await http.post(
         Uri.parse("https://fcm.googleapis.com/fcm/send"),
