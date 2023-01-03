@@ -17,7 +17,7 @@ class OrderWidget extends StatelessWidget {
     return Obx(() => ListView(
         scrollDirection: Axis.vertical,
         children: orderController.orders
-            .where((p0) => p0.status == "Done")
+            .where((p0) => p0.status == "notDone")
             .map((orderModel order) {
           return Orderwidgetnew(order);
         }).toList()));

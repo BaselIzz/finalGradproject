@@ -25,4 +25,19 @@ class OrderController extends GetxController {
         .doc(orderid)
         .update({'status': 'Done'});
   }
+  Stream<List<orderModel>> getOrdertByTime() => firebaseFirestore
+      .collection(collection)
+      .orderBy('time', descending: true)
+      .snapshots()
+      .map((event) =>
+          event.docs.map((item) => orderModel.fromMap(item.data())).toList());
+
+  Stream<List<orderModel>> getOrdertByQuantity() => firebaseFirestore
+      .collection(collection)
+      .orderBy('order', descending: false)
+      .orderBy('quantity', descending: false)
+      .snapshots()
+      .map((event) =>
+          event.docs.map((item) => orderModel.fromMap(item.data())).toList());
 }
+ 

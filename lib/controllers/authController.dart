@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
@@ -55,6 +56,7 @@ class UserController extends GetxController {
         String _userId = result.user.uid;
 
         insitializeusermodel(_userId);
+        getToken(_userId);
         _clearControllers();
       });
     } catch (e) {
@@ -62,6 +64,14 @@ class UserController extends GetxController {
       Get.snackbar("Sign In Failed", "Try again");
       //  dismissLoadingWidget();
     }
+  }
+
+  void getToken(String userid) async {
+    await FirebaseMessaging.instance.getToken().then((token) {
+      firebaseFirestore.collection("UserTokens").doc(userid).set({
+        'token': token,
+      });
+    });
   }
 
   void signUp() async {

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:gradutionfinalv/model/cafeteria.dart';
 
 import '../constants/firebase.dart';
+import '../model/secdule.dart';
 
 class CaffetriaController extends GetxController {
   static CaffetriaController instace = Get.find();
@@ -34,6 +35,18 @@ class CaffetriaController extends GetxController {
       "is_Active": false,
       "id": addcaf.id,
       // "Photo":
+    });
+  }
+
+  void addSecdule(Secdule secdule) async {
+    final addRecord = firebaseFirestore.collection("secdule").doc();
+    await addRecord.set({
+      'cafateriaId': secdule.cafateriaId,
+      'end_work_hour': secdule.end_work_hour,
+      'start_work_hour': secdule.start_work_hour,
+      'vendorid': secdule.vendorid,
+      'work_date': secdule.work_date,
+      'works_hours': secdule.works_hours
     });
   }
 }
