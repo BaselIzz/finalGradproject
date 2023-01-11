@@ -84,6 +84,7 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
             height: 16,
           ),
           _buildPassowrd(),
+          _buildFooter()
         ]),
       ),
     );
@@ -103,7 +104,7 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
       hintText: "Name",
       hasPrefixIcon: true,
       obscured: false,
-      //  controller: userController.name,
+      controller: userController.name,
     );
   }
 
@@ -111,7 +112,7 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
     return CustomTextFormField(
       autofillHints: [AutofillHints.email],
       icon: Icon(Icons.key),
-      //  controller: userController.password,
+      controller: userController.password,
       hasPrefixIcon: true,
       //  onSaved: (newValue) => setState(() => password = newValue),
       validator: (newvalue) {
@@ -141,7 +142,7 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
       // onSaved: (value) => setState(() => email = value),
       validator: (value) {
         const pattern =
-            r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+edu";
+            r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+com";
         final regExp = RegExp(pattern);
 
         if (value.isEmpty) {
@@ -154,8 +155,8 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
       hintText: "Email",
       icon: Icon(Icons.email),
       hasPrefixIcon: true,
-      //controller: userController.email,
-      obscured: isPasswordVisible,
+      controller: userController.email,
+      obscured: false,
     );
   }
 
@@ -194,5 +195,36 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
             });
           },
         ));
+  }
+
+  Widget _buildFooter() {
+    return Column(children: <Widget>[
+      InkWell(
+        onTap: (() {
+          final isValid = formKey.currentState.validate();
+          if (isValid == true) {
+            formKey.currentState.save();
+            userController.signOut();
+            userController.createManger(selection.toString());
+            caffetriaController.changehasuser(selection.toString().trim());
+          }
+        }),
+        child: Container(
+          width: 300,
+          height: 60,
+          decoration: Decorations.primaryButtonDecoration,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "CreateManger ",
+                textAlign: TextAlign.center,
+                style: Styles.normalTextStyle,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ]);
   }
 }

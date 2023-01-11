@@ -3,9 +3,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
+import 'package:gradutionfinalv/model/manger.dart';
 import 'package:gradutionfinalv/model/vendor.dart';
 import 'package:gradutionfinalv/screens/login_screen.dart';
 import 'package:gradutionfinalv/screens/main_screen.dart';
+import 'package:gradutionfinalv/screens/manger_screen.dart';
 import 'package:gradutionfinalv/screens/vendor_screen.dart';
 import 'package:gradutionfinalv/screens/verifed_screen.dart';
 
@@ -27,6 +29,8 @@ class UserController extends GetxController {
   Rx<UserModel> userModel = UserModel().obs;
   Rx<AdminModel> adminmodel = AdminModel().obs;
   Rx<VendorModel> vendormodel = VendorModel().obs;
+  Rx<MangerModel> mangerModel = MangerModel().obs;
+  String useremail, userpassword;
 
   @override
   void onReady() {
@@ -53,6 +57,30 @@ class UserController extends GetxController {
           .signInWithEmailAndPassword(
               email: email.text.trim(), password: password.text.trim())
           .then((result) {
+        useremail = email.text;
+        userpassword = password.text;
+        String _userId = result.user.uid;
+
+        insitializeusermodel(_userId);
+        getToken(_userId);
+        _clearControllers();
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+      Get.snackbar("Sign In Failed", "Try again");
+      //  dismissLoadingWidget();
+    }
+  }
+
+  void signInwithEmailandPassword(String useremail, String userpassword) async {
+    try {
+      //  showLoading();
+      await auth
+          .signInWithEmailAndPassword(
+              email: email.text.trim(), password: password.text.trim())
+          .then((result) {
+        useremail = email.text.trim();
+        userpassword = password.text.trim();
         String _userId = result.user.uid;
 
         insitializeusermodel(_userId);
@@ -68,7 +96,7 @@ class UserController extends GetxController {
 
   void getToken(String userid) async {
     await FirebaseMessaging.instance.getToken().then((token) {
-      firebaseFirestore.collection("UserTokens").doc(userid).set({
+      firebaseFirestore.collection("UserTokens").doc(userid).update({
         'token': token,
       });
     });
@@ -91,6 +119,33 @@ class UserController extends GetxController {
       Get.snackbar("Sign In Failed", "Try again");
       //  dismissLoadingWidget();
     }
+  }
+
+  void createManger(String caffeteriaid) async {
+    try {
+      signOut();
+      await auth
+          .createUserWithEmailAndPassword(
+              email: email.text.trim(), password: password.text.trim())
+          .then((value) {
+        String _userid = value.user.uid;
+        addMangerToFirestore(_userid, caffeteriaid);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+      Get.snackbar("Sign up Failed", "Try again");
+    }
+  }
+
+  addMangerToFirestore(String userId, String cafeteriaid) {
+    firebaseFirestore.collection(usersCollection).doc(userId).set({
+      "name": name.text.trim(),
+      "id": userId,
+      "email": email.text.trim(),
+      "cafeteriaid": cafeteriaid.toString(),
+      "role": "manger"
+    });
+    Get.offAll(AdminScreen());
   }
 
   void signOut() async {
@@ -121,6 +176,12 @@ class UserController extends GetxController {
         .update(data);
   }
 
+  Stream<UserModel> listenToUser() => firebaseFirestore
+      .collection(usersCollection)
+      .doc(firebaseUser.value.uid)
+      .snapshots()
+      .map((snapshot) => UserModel.fromSnapshot(snapshot));
+
   insitializeusermodel(String userid) async {
     await firebaseFirestore
         .collection(usersCollection)
@@ -139,13 +200,22 @@ class UserController extends GetxController {
             .then((doc) => UserModel.fromSnapshot(doc));
         userModel.bindStream(listenToUser());
         Get.offAll(() => MainScreen());
-      } else {
+      } else if (value.get("role") == "admin") {
         adminmodel.value = await firebaseFirestore
             .collection(usersCollection)
             .doc(userid)
             .get()
             .then((doc) => AdminModel.fromSnapshot(doc));
         Get.offAll(AdminScreen());
+      } else {
+        //  if (adminmodel.value.email == null) {
+        mangerModel.value = await firebaseFirestore
+            .collection(usersCollection)
+            .doc(userid)
+            .get()
+            .then((value) => MangerModel.fromSnapshot(value));
+        Get.offAll(MangerScreen());
+        // }
       }
     });
   }
@@ -158,10 +228,4 @@ class UserController extends GetxController {
       Get.snackbar("There is a proplem", "Can send forget password");
     }
   }
-
-  Stream<UserModel> listenToUser() => firebaseFirestore
-      .collection(usersCollection)
-      .doc(firebaseUser.value.uid)
-      .snapshots()
-      .map((snapshot) => UserModel.fromSnapshot(snapshot));
 }

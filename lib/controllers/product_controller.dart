@@ -20,24 +20,35 @@ class ProductsController extends GetxController {
           event.docs.map((item) => ProductModel.fromMap(item.data())).toList());
 
   void addproduct(ProductModel product) async {
-    for (var pro in products) {
-      if (pro.caffeteriaid == product.caffeteriaid &&
-          pro.ProductName == product.ProductName) {
-        Get.snackbar("The item is already added ",
-            "${product.ProductName} is already exist  ");
-        return;
-      }
+    if (isadded(product)) {
+      Get.snackbar("The item is already added ",
+          "${product.ProductName} is already exist  ");
+      return;
     }
+
     final addprd = firebaseFirestore.collection(collection).doc();
     final json = {
-      "cafeteriaid": product.caffeteriaid,
+      "cafetria_id": product.caffeteriaid,
       // "categoryid": product.categoryId,
       "id": addprd.id,
-      "image": product.ProductPhoto,
-      "name": product.ProductName,
-      "price": product.ProductPrice,
+      "product_photo": product.ProductPhoto,
+      "product_name": product.ProductName,
+      "product_price": product.ProductPrice,
+      "is_Exist": product.is_Exist,
+      "product_time": product.ProductTime
     };
     await addprd.set(json);
+  }
+
+  void updateStatus(String id, bool status) {
+    firebaseFirestore
+        .collection(collection)
+        .doc(id)
+        .update({"is_Exist": !status});
+  }
+
+  bool isadded(ProductModel product) {
+    return products.where((p0) => p0 == product).isNotEmpty;
   }
 
   // Stream<List<ProductModel>> getforcaff() => firebaseFirestore
@@ -46,4 +57,5 @@ class ProductsController extends GetxController {
   //     .snapshots()
   //     .map((event) =>
   //         event.docs.map((e) => ProductModel.fromMap(e.data())).toList());
+
 }

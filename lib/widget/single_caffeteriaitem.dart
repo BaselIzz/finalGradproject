@@ -25,7 +25,7 @@ class SingleCaffeteriaitem extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
               child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15),
@@ -33,8 +33,9 @@ class SingleCaffeteriaitem extends StatelessWidget {
                   ),
                   child: Image.network(
                     "https://heavy.com/wp-content/uploads/2020/12/GettyImages-133281966-e1608688624818.jpg?quality=65&strip=all",
-                    width: 1200,
+                    width: 200,
                     height: 100,
+                    fit: BoxFit.contain,
                   )),
             ),
             CustomText(
@@ -42,32 +43,13 @@ class SingleCaffeteriaitem extends StatelessWidget {
               size: 18,
               weight: FontWeight.bold,
             ),
-            // CustomText(
-            //   text: '${Caffeteia.}',
-            //   color: Colors.grey,
-            // ),
-            SizedBox(
-              height: 5,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // // Padding(
-                // //   padding: const EdgeInsets.only(left: 8.0),
-                // //   child: CustomText(
-                // //     text: "₪${product.ProductPrice}",
-                // //     size: 22,
-                // //     weight: FontWeight.bold,
-                // //   ),
-                // ),
                 SizedBox(
                   width: 10,
                 ),
-                IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: () {
-                      //      cartController.addProductTocart(product);
-                    })
+                IconButton(icon: Icon(Icons.remove), onPressed: () {})
               ],
             ),
           ],

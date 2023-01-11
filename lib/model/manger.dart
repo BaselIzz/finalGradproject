@@ -6,25 +6,25 @@ class MangerModel {
   static const ID = "id";
   static const USERNAME = "name";
   static const EMAIL = "email";
-  static const CAFETERIA = "cafeteria";
-  static const VENDORS = "vendor";
-  static const PASSWORD = "password";
+  static const CAFETERIA = "cafeteriaid";
+  static const ROLE = "role";
 
   String mangerId;
 
   String userName;
+  String userEmail;
 
-  //List<VendorModel> vendors;
+  String cafeteriaid;
 
-  CafeteriaModel cafeteria;
+  String role;
 
-  String password;
+  MangerModel({this.mangerId, this.userName, this.userEmail, this.role});
 
   MangerModel.fromSnapshot(DocumentSnapshot snapshot) {
     mangerId = (snapshot.data() as Map<String, dynamic>)[ID];
     userName = (snapshot.data() as Map<String, dynamic>)[USERNAME];
-    // vendors = (snapshot.data() as Map<String, dynamic>)[VENDORS];
-    cafeteria = (snapshot.data() as Map<String, dynamic>)[CAFETERIA];
-    password = (snapshot.data() as Map<String, dynamic>)[PASSWORD];
+    cafeteriaid = (snapshot.data() as Map<String, dynamic>)[CAFETERIA];
+    role = (snapshot.data() as Map<String, dynamic>)[ROLE];
+    userEmail = (snapshot.data() as Map<String, dynamic>)[EMAIL];
   }
 }

@@ -24,8 +24,14 @@ class ProductModel {
   String ProductPhoto;
   String caffeteriaid;
 
-  ProductModel(this.ProductID, this.ProductName, this.ProductPhoto,
-      this.ProductPrice, this.ProductTime, this.is_Exist, this.caffeteriaid);
+  ProductModel(
+      {this.ProductID,
+      this.ProductName,
+      this.ProductPhoto,
+      this.ProductPrice,
+      this.ProductTime,
+      this.is_Exist,
+      this.caffeteriaid});
 
   ProductModel.fromMap(Map<String, dynamic> data) {
     ProductID = data[ID];

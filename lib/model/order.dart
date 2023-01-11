@@ -11,6 +11,7 @@ class orderModel {
   static const TOTALPRICE = "totalprice";
   static const UIDUser = "userid";
   static const NameCreated = "createdby";
+  static const SARVED = "sarved";
 
   String cafeteriaid;
   List<OrderItemModel> order;
@@ -21,7 +22,7 @@ class orderModel {
   String totalprice;
   String status;
   String createdby;
-
+  bool sarved;
   orderModel(
       {this.cafeteriaid,
       this.orderid,
@@ -31,7 +32,8 @@ class orderModel {
       this.useremail,
       this.userid,
       this.createdby,
-      this.order});
+      this.order,
+      this.sarved});
   orderModel.fromMap(Map<String, dynamic> data) {
     cafeteriaid = data[CAFFETERIAID];
     time = data[TIME];
@@ -41,6 +43,7 @@ class orderModel {
     totalprice = data[TOTALPRICE];
     status = data[STATUS];
     createdby = data[NameCreated];
+    sarved = data[SARVED] ?? false;
     order = _convertCartItems(List.from(data[OREDER] ?? []));
   }
   List<OrderItemModel> _convertCartItems(List cartFomDb) {

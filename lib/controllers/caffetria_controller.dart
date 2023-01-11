@@ -38,6 +38,13 @@ class CaffetriaController extends GetxController {
     });
   }
 
+  void changehasuser(String cafeteriaid) {
+    firebaseFirestore
+        .collection(collection)
+        .doc(cafeteriaid)
+        .update({"hasuser": !true});
+  }
+
   void addSecdule(Secdule secdule) async {
     final addRecord = firebaseFirestore.collection("secdule").doc();
     await addRecord.set({

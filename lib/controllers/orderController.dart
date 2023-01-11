@@ -25,6 +25,16 @@ class OrderController extends GetxController {
         .doc(orderid)
         .update({'status': 'Done'});
   }
+
+  void updateSarved(
+    String orderid,
+  ) {
+    firebaseFirestore
+        .collection(collection)
+        .doc(orderid)
+        .update({'sarved': true});
+  }
+
   Stream<List<orderModel>> getOrdertByTime() => firebaseFirestore
       .collection(collection)
       .orderBy('time', descending: true)
@@ -40,4 +50,3 @@ class OrderController extends GetxController {
       .map((event) =>
           event.docs.map((item) => orderModel.fromMap(item.data())).toList());
 }
- 

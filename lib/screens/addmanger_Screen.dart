@@ -4,9 +4,11 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/screens/admin_screen.dart';
+import 'package:gradutionfinalv/widget/addCaffeteriawidget.dart';
 import 'package:gradutionfinalv/widget/addMagerwidget.dart';
 
 import '../constants/controllers.dart';
+import '../values/values.dart';
 
 class AddMangerScreen extends StatelessWidget {
   const AddMangerScreen({Key key}) : super(key: key);
@@ -43,13 +45,23 @@ class AddMangerScreen extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Get.offAll(AdminScreen());
+              Get.offAll(() => const AdminScreen());
             },
             leading: Icon(
               Icons.table_chart,
               color: Colors.black87,
             ),
-            title: Text("Caffetria"),
+            title: Text("Admin"),
+          ),
+          ListTile(
+            onTap: () {
+              Get.offAll(() => AddcafeteriaWidget());
+            },
+            leading: Icon(
+              Icons.table_chart,
+              color: Colors.black87,
+            ),
+            title: Text("Add Caffeteria"),
           )
         ]),
       ),

@@ -27,8 +27,10 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   Iterable<String> autofillHints;
   int maxLength;
+  final TextInputType keybordtype;
 
   CustomTextFormField({
+    this.keybordtype,
     this.icon,
     this.maxLength,
     this.autofillHints,
@@ -59,6 +61,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: TextFormField(
+        keyboardType: keybordtype,
         maxLength: maxLength,
         validator: validator,
         onSaved: onsave,

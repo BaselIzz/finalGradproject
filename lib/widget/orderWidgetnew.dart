@@ -120,13 +120,18 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
         ),
         ElevatedButton(
             onPressed: () {
-              // getToken();
-              sendPushMessage(deviceToken, "hello wrold", "hello");
-              // showDoneDialog();
-              // FirebaseMessaging.onMessage.listen((event) {
-              //   print("hello");
-              //   //  print(event.data.toString());
-              //   print(event.notification.body);
+              orderController.updateState(widget.order.orderid);
+              getDeviceToken(widget.order.userid);
+              sendPushMessage(deviceToken, "Hello", "your order done ");
+              print(deviceToken);
+              // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+              //   print('Got a message whilst in the foreground!');
+              //   print('Message data: ${message.data}');
+
+              //   if (message.notification != null) {
+              //     print(
+              //         'Message also contained a notification: ${message.notification}');
+              //   }
               // });
             },
             child: Text("Done"))
@@ -138,8 +143,6 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
   void initState() {
     super.initState();
     getDeviceToken(widget.order.userid);
-
-    // initInfo();
   }
 
   Future getDeviceToken(String userId) async {

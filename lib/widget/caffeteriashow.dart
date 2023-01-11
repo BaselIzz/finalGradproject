@@ -17,9 +17,9 @@ class CaffeteiaShow extends StatelessWidget {
       () => GridView.count(
           crossAxisCount: 2,
           childAspectRatio: .63,
-          padding: const EdgeInsets.all(10),
-          mainAxisSpacing: 5.0,
-          crossAxisSpacing: 20,
+          padding: const EdgeInsets.all(20),
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 40,
           children:
               caffetriaController.cafeterias.map((CafeteriaModel caffeteria) {
             return Container(

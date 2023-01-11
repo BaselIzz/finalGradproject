@@ -109,6 +109,7 @@ class CartController extends GetxController {
     if (userController.userModel.value.cart.isNotEmpty) {
       final doc = FirebaseFirestore.instance.collection("orders").doc();
       final jason = {
+        "served": false,
         "cafeteriaid": cart.cafeteriaId.toString(),
         "order": userController.userModel.value.cart
             .map((e) => e.toJsonOreder())
