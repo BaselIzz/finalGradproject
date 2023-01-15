@@ -35,6 +35,8 @@ class _AddProductWidgetState extends State<AddProductWidget> {
   final priceController = TextEditingController();
   final productNameConntroller = TextEditingController();
   final productTimeController = TextEditingController();
+  final productDescriptionConntroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var heightOfScreen = MediaQuery.of(context).size.height;
@@ -63,11 +65,20 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                 key: formkey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: ListView(children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  SizedBox(
-                    height: 5,
+                  Center(
+                    child: CustomText(
+                      text: caffetriaController.getCaffeterianame(
+                          userController.mangerModel.value.cafeteriaid),
+                      color: Colors.blue,
+                      size: 24,
+                      weight: FontWeight.w900,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
                   ),
                   CustomButton(
                     onTap: () {
@@ -98,7 +109,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                     },
                     text: "upload",
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   const Center(
@@ -197,25 +208,53 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                       fillColor: Colors.black,
                     ),
                   ),
+                  const Center(
+                    child: CustomText(
+                      color: Colors.white,
+                      text: "Discription",
+                      size: 20,
+                      weight: FontWeight.w600,
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(20),
+                    child: CustomTextFormField(
+                      icon: const Icon(Icons.table_chart),
+                      hasPrefixIcon: true,
+                      validator: (p0) {
+                        if (p0.isEmpty) {
+                          return "must be not empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: productDescriptionConntroller,
+                      hintText: "Product Description",
+                      borderColor: Colors.green,
+                      fillColor: Colors.black,
+                      maxLines: 5,
+                    ),
+                  ),
                   CustomButton(
                       text: "Add Product",
                       onTap: () {
                         final isValid = formkey.currentState.validate();
                         if (isValid) {
                           ProductModel product = ProductModel(
-                            ProductID: "",
-                            ProductName: productNameConntroller.text,
-                            ProductPhoto: donloadUrl,
-                            ProductPrice: priceController.text,
-                            caffeteriaid:
-                                userController.mangerModel.value.cafeteriaid,
-                            is_Exist: true,
-                            ProductTime: productTimeController.text,
-                          );
+                              ProductID: "",
+                              ProductName: productNameConntroller.text,
+                              ProductPhoto: donloadUrl,
+                              ProductPrice: priceController.text,
+                              caffeteriaid:
+                                  userController.mangerModel.value.cafeteriaid,
+                              is_Exist: true,
+                              ProductTime: productTimeController.text,
+                              description: productDescriptionConntroller.text);
                           productsController.addproduct(product);
                           productNameConntroller.clear();
                           priceController.clear();
                           productTimeController.clear();
+                          productDescriptionConntroller.clear();
                         }
                       }),
                 ]),

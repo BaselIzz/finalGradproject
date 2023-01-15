@@ -31,11 +31,11 @@ class VendorScreen extends StatelessWidget {
       drawer: Drawer(
         child: ListView(
           children: [
-            //       // Obx(() => UserAccountsDrawerHeader(
-            //       //     decoration: BoxDecoration(color: Colors.black),
-            //       //     accountName: Text(userController.vendormodel.value.name ?? ""),
-            //       //     accountEmail:
-            //       //         Text(userController.vendormodel.value.email ?? ""))),
+            Obx(() => UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Colors.black),
+                accountName: Text(userController.vendormodel.value.name ?? ""),
+                accountEmail:
+                    Text(userController.vendormodel.value.email ?? ""))),
             ListTile(
               onTap: () {
                 print("__________________________________Signout");

@@ -26,6 +26,22 @@ class OrderController extends GetxController {
         .update({'status': 'Done'});
   }
 
+  void reorder(orderModel order) {
+    var orderid = firebaseFirestore.collection(collection).doc();
+    orderid.set({
+      "served": false,
+      "cafeteriaid": order.cafeteriaid,
+      "order": order.order.map((e) => e.Tojason()).toList(),
+      "orderid": orderid.id,
+      "createdby": order.createdby,
+      "time": DateTime.now().toString(),
+      "status": "notDone",
+      "useremail": order.useremail,
+      "totalprice": order.totalprice,
+      "userid": order.userid,
+    });
+  }
+
   void updateSarved(
     String orderid,
   ) {

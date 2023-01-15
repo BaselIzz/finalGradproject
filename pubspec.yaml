@@ -49,6 +49,7 @@ dependencies:
   logger: ^1.1.0
   modal_bottom_sheet: ^2.1.2
   pin_code_fields: ^7.4.0
+  string_similarity: ^2.0.0
   uuid: ^3.0.7
 
 dev_dependencies:

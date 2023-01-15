@@ -3,29 +3,20 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:gradutionfinalv/model/admin.dart';
-import 'package:gradutionfinalv/screens/addmanger_Screen.dart';
-import 'package:gradutionfinalv/screens/vendor_screen.dart';
-import 'package:gradutionfinalv/widget/addCaffeteriawidget.dart';
-import 'package:gradutionfinalv/widget/addProductwidget.dart';
-import 'package:gradutionfinalv/widget/add_vendorwScreen.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:gradutionfinalv/screens/manger_screen.dart';
+import 'package:gradutionfinalv/widget/addvendorwidget.dart';
 
 import '../constants/controllers.dart';
-import '../widget/caffeteriashow.dart';
 
-class MangerScreen extends StatelessWidget {
-  const MangerScreen({Key key}) : super(key: key);
+class AddVendorScreen extends StatelessWidget {
+  const AddVendorScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var heightOfScreen = MediaQuery.of(context).size.height;
-    var widthOfScreen = MediaQuery.of(context).size.width;
     return GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
           if (!currentFocus.hasPrimaryFocus) {
-            //this is for basel izz
             currentFocus.unfocus();
           }
         },
@@ -33,7 +24,7 @@ class MangerScreen extends StatelessWidget {
           appBar: AppBar(
             title: Center(
               child: Text(
-                "Add Product",
+                "Create Vendor account",
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -60,18 +51,18 @@ class MangerScreen extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Get.off(() => AddVendorScreen());
+                    Get.offAll(() => MangerScreen());
                   },
                   leading: Icon(
-                    Icons.add,
+                    Icons.table_chart,
                     color: Colors.black87,
                   ),
-                  title: Text("Add Vendor"),
+                  title: Text("Manger"),
                 ),
               ],
             ),
           ),
-          body: AddProductWidget(),
+          body: AddVendorWidget(),
         ));
   }
 }

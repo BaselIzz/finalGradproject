@@ -137,6 +137,22 @@ class UserController extends GetxController {
     }
   }
 
+  void createVendor() async {
+    try {
+      signOut();
+      await auth
+          .createUserWithEmailAndPassword(
+              email: email.text.trim(), password: password.text.trim())
+          .then((value) {
+        String _userid = value.user.uid;
+        addvendorTofirebase(_userid);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+      Get.snackbar("Sign up Failed", "Try again");
+    }
+  }
+
   addMangerToFirestore(String userId, String cafeteriaid) {
     firebaseFirestore.collection(usersCollection).doc(userId).set({
       "name": name.text.trim(),
@@ -145,7 +161,6 @@ class UserController extends GetxController {
       "cafeteriaid": cafeteriaid.toString(),
       "role": "manger"
     });
-    Get.offAll(AdminScreen());
   }
 
   void signOut() async {
@@ -207,8 +222,7 @@ class UserController extends GetxController {
             .get()
             .then((doc) => AdminModel.fromSnapshot(doc));
         Get.offAll(AdminScreen());
-      } else {
-        //  if (adminmodel.value.email == null) {
+      } else if (value.get("role") == "manger") {
         mangerModel.value = await firebaseFirestore
             .collection(usersCollection)
             .doc(userid)
@@ -216,6 +230,13 @@ class UserController extends GetxController {
             .then((value) => MangerModel.fromSnapshot(value));
         Get.offAll(MangerScreen());
         // }
+      } else {
+        vendormodel.value = await firebaseFirestore
+            .collection(usersCollection)
+            .doc(userid)
+            .get()
+            .then((value) => VendorModel.fromSnapshot(value));
+        Get.offAll(VendorScreen());
       }
     });
   }
@@ -227,5 +248,15 @@ class UserController extends GetxController {
       debugPrint(e.toString());
       Get.snackbar("There is a proplem", "Can send forget password");
     }
+  }
+
+  void addvendorTofirebase(String userid) {
+    firebaseFirestore.collection(usersCollection).doc(userid).set({
+      "name": name.text.trim(),
+      "id": userid,
+      "email": email.text.trim(),
+      "cafeteriaid": mangerModel.value.cafeteriaid,
+      "role": "vendor"
+    });
   }
 }

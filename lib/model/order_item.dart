@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class OrderItemModel {
   static const ID = "id";
   static const IMAGE = "image";
@@ -27,4 +29,12 @@ class OrderItemModel {
     cost = data[COST];
     productId = data[PRODUCT_ID];
   }
+  Map Tojason() => {
+        ID: id,
+        PRODUCT_ID: productId,
+        IMAGE: image,
+        NAME: name,
+        QUANTITY: quantity,
+        COST: ((cost * int.parse(quantity))).toString(),
+      };
 }

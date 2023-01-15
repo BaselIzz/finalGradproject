@@ -11,6 +11,7 @@ class ProductModel {
 
   static const Time = "product_time";
   static const CAFFETERIAID = "cafetria_id";
+  static const DESCIPTION = "product_description";
   String ProductID;
 
   String ProductName;
@@ -18,6 +19,7 @@ class ProductModel {
   String ProductPrice;
 
   String ProductTime;
+  String description;
 
   bool is_Exist;
 
@@ -31,12 +33,13 @@ class ProductModel {
       this.ProductPrice,
       this.ProductTime,
       this.is_Exist,
-      this.caffeteriaid});
+      this.caffeteriaid,
+      this.description});
 
   ProductModel.fromMap(Map<String, dynamic> data) {
     ProductID = data[ID];
     ProductName = data[NAME];
-
+    // description = data[DESCIPTION];
     ProductPrice = data[PRICE];
     ProductPhoto = data[PHOTO];
     caffeteriaid = data[CAFFETERIAID];

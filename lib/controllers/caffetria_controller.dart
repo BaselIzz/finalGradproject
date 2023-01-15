@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/model/cafeteria.dart';
 
 import '../constants/firebase.dart';
@@ -39,10 +40,16 @@ class CaffetriaController extends GetxController {
   }
 
   void changehasuser(String cafeteriaid) {
-    firebaseFirestore
-        .collection(collection)
-        .doc(cafeteriaid)
-        .update({"hasuser": !true});
+    firebaseFirestore.collection(collection).doc(cafeteriaid).update({
+      "hasuser": true,
+      "email": userController.email.text,
+    });
+  }
+
+  String getCaffeterianame(String cafeteriaid) {
+    CafeteriaModel caf =
+        cafeterias.where((p0) => p0.cafeteriaId == cafeteriaid).first;
+    return caf.cafeteriaName;
   }
 
   void addSecdule(Secdule secdule) async {

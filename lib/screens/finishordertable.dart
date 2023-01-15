@@ -18,7 +18,10 @@ class FinishOrderTable extends StatelessWidget {
           child: ListView(
             children: orderController.orders
                 .where((p0) =>
-                    p0.status == "Done" && p0.sarved == false) //cafeteriaid
+                    p0.status == "Done" &&
+                    p0.sarved == false &&
+                    p0.cafeteriaid ==
+                        userController.vendormodel.value.caffeteriaid)
                 .map((orderModel order) {
               return FinishedOrderWidget(order);
             }).toList(),

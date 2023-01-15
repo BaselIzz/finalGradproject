@@ -35,7 +35,8 @@ class ProductsController extends GetxController {
       "product_name": product.ProductName,
       "product_price": product.ProductPrice,
       "is_Exist": product.is_Exist,
-      "product_time": product.ProductTime
+      "product_time": product.ProductTime,
+      "product_description": product.description
     };
     await addprd.set(json);
   }

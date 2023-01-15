@@ -4,21 +4,20 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
+import 'package:gradutionfinalv/widget/custom_text.dart';
 import 'package:gradutionfinalv/widget/custom_text_from_field.dart';
 import 'package:gradutionfinalv/widget/dark_overlay.dart';
 
 import '../values/values.dart';
 
-class AddMangerWidget extends StatefulWidget {
-  final List<String> items = ["1", 'Item 1', 'Item 2', 'Item 3', 'Item 4'];
-
-  AddMangerWidget({Key key}) : super(key: key);
+class AddVendorWidget extends StatefulWidget {
+  const AddVendorWidget({Key key}) : super(key: key);
 
   @override
-  State<AddMangerWidget> createState() => _AddMangerWidgetState();
+  State<AddVendorWidget> createState() => _AddVendorWidgetState();
 }
 
-class _AddMangerWidgetState extends State<AddMangerWidget> {
+class _AddVendorWidgetState extends State<AddVendorWidget> {
   bool isPasswordVisible = true;
 
   String selection;
@@ -26,7 +25,6 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    selection = widget.items.first.toString();
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
     return Stack(children: <Widget>[
@@ -62,17 +60,16 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         key: formKey,
         child: Column(children: <Widget>[
-          _buildDropdownlist(),
-          SizedBox(
-            height: 20,
+          CustomText(
+            color: Colors.white,
+            size: 20,
+            text: '${caffetriaController.getCaffeterianame(
+              userController.mangerModel.value.cafeteriaid,
+            )}',
           ),
-          // SizedBox(
-          //   height: 20,
-          // ),
-          //_buildUsername(),
-          //  SizedBox(
-          //  height: 16,
-          // ),
+          SizedBox(
+            height: 16,
+          ),
           _buildName(),
           // SizedBox(
           //   height: 16,
@@ -98,7 +95,7 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
       // onSaved: (value) => setState(() => name = value),
       validator: (value) {
         if (value.isEmpty) {
-          return 'Enter your Name';
+          return 'Enter the Name';
         }
         return null;
       },
@@ -162,47 +159,6 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
     );
   }
 
-  Widget _buildDropdownlist() {
-    return Obx(() => DropdownButtonFormField<String>(
-          dropdownColor: AppColors.greyShade1,
-          onSaved: (newValue) => setState(
-            () => selection = newValue,
-          ),
-          items: caffetriaController.cafeterias
-                  .where((element) => element.hasuser == false)
-                  .map((caffeteria) {
-                return DropdownMenuItem(
-                  value: caffeteria.cafeteriaId,
-                  child: Text(caffeteria.cafeteriaName),
-                );
-              }).toList() ??
-              [],
-          borderRadius: BorderRadius.circular(10),
-          menuMaxHeight: 100.2,
-          style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.w700,
-              decorationColor: Colors.blue,
-              overflow: TextOverflow.fade),
-          focusColor: Colors.black,
-          value: caffetriaController.cafeterias
-                  .where((element) => element.hasuser == false)
-                  .map((caffeteria) {
-                    return caffeteria.cafeteriaId.toString();
-                  })
-                  .toList()
-                  .first ??
-              "empty",
-          isExpanded: true,
-          icon: const Icon(Icons.arrow_drop_down_circle),
-          onChanged: (value) {
-            setState(() {
-              this.selection = value;
-            });
-          },
-        ));
-  }
-
   Widget _buildFooter() {
     return Column(children: <Widget>[
       InkWell(
@@ -211,8 +167,7 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
           if (isValid == true) {
             formKey.currentState.save();
             userController.signOut();
-            userController.createManger(selection.toString());
-            caffetriaController.changehasuser(selection.toString().trim());
+            userController.createVendor();
           }
         }),
         child: Container(
@@ -223,7 +178,7 @@ class _AddMangerWidgetState extends State<AddMangerWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Create Manger ",
+                "CreateManger ",
                 textAlign: TextAlign.center,
                 style: Styles.normalTextStyle,
               ),
