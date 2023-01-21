@@ -39,11 +39,22 @@ class ProductModel {
   ProductModel.fromMap(Map<String, dynamic> data) {
     ProductID = data[ID];
     ProductName = data[NAME];
-    // description = data[DESCIPTION];
+    description = data[DESCIPTION];
     ProductPrice = data[PRICE];
     ProductPhoto = data[PHOTO];
     caffeteriaid = data[CAFFETERIAID];
     is_Exist = data[EXIST] ?? false;
     ProductTime = data[Time];
   }
+
+  Map toJson() => {
+        ID: ProductID,
+        NAME: ProductName,
+        DESCIPTION: description,
+        PRICE: ProductPrice,
+        PHOTO: ProductPhoto,
+        CAFFETERIAID: caffeteriaid,
+        EXIST: is_Exist ?? true,
+        Time: ProductTime,
+      };
 }

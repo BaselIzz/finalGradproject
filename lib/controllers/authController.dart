@@ -173,6 +173,7 @@ class UserController extends GetxController {
       "id": userId,
       "email": email.text.trim(),
       "cart": [],
+      "history_list": [],
       "role": "user"
     });
   }

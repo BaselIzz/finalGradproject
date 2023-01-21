@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gradutionfinalv/model/product.dart';
+import 'package:gradutionfinalv/screens/products.screen.dart';
 import '../constants/controllers.dart';
 import '../model/category.dart';
 import '../values/values.dart';
 import '../widget/caffeteriaitem.dart';
 import '../widget/heading_row.dart';
+import '../widget/recomandedItems.dart';
 import 'caffeteria_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -39,7 +42,22 @@ class HomeScreen extends StatelessWidget {
           Container(
               height: 170,
               width: MediaQuery.of(context).size.width,
-              child: CaffeteriaItems())
+              child: CaffeteriaItems()),
+          SizedBox(
+            height: 50,
+          ),
+          HeadingRow(
+            onTapOfNumber: () {},
+            title: "Recmoandation Meals ",
+            number: 'View more (${recommendationController.Reclist.length})',
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+              height: 170,
+              width: MediaQuery.of(context).size.width,
+              child: RecomandedItems()),
         ],
       ),
     );
