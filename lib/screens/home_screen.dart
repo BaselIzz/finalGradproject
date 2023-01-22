@@ -13,8 +13,6 @@ import 'caffeteria_screen.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    recommendationController.getrecomander();
-
     return Scaffold(
       body: Column(
         children: [
@@ -41,7 +39,6 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: 50,
           ),
-
           Obx(
             () => HeadingRow(
               onTapOfNumber: () {},
@@ -49,7 +46,6 @@ class HomeScreen extends StatelessWidget {
               number:
                   'View more (${userController.userModel.value.historyList.length})',
             ),
-
           ),
           SizedBox(
             height: 16,

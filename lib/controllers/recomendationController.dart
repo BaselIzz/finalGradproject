@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -14,32 +13,6 @@ class RecommendationController extends GetxController {
   RxMap<ProductModel, List<ProductModel>> recomanderList =
       RxMap<ProductModel, List<ProductModel>>();
   List<ProductModel> list = List();
-
-  // getrecomander() {
-  //   List<List<double>> descriptionMatrix = [];
-
-  //   for (var i = 0; i < productsController.products.length; i++) {
-  //     descriptionMatrix.add([]);
-  //     for (var j = 0; j < productsController.products.length; j++) {
-  //       var similarity = StringSimilarity.compareTwoStrings(
-  //           productsController.products[i].description,
-  //           productsController.products[j].description);
-  //       descriptionMatrix[i].add(similarity);
-  //     }
-  //   }
-
-  //   // Print the similarity scores for the first meal
-  //   for (var i = 0; i < productsController.products.length; i++) {
-  //     List<ProductModel> data = <ProductModel>[];
-  //     for (var j = 0; j < productsController.products.length; j++) {
-  //       if (descriptionMatrix[i][j] >= 0.8) {
-  //         data.add(productsController.products[j]);
-  //       }
-  //     }
-
-  //     recomanderList.putIfAbsent(productsController.products[i], () => data);
-  //   }
-  // }
 
   getissa() {
     List<List<double>> descriptionMatrix = [];
@@ -57,16 +30,13 @@ class RecommendationController extends GetxController {
     }
     for (var i = 0; i < productsController.products.length; i++) {
       List<ProductModel> data = <ProductModel>[];
-      HashMap<String, int> set = HashMap();
+      Map<String, int> set = Map();
 
       for (var j = 0; j < productsController.products.length; j++) {
-
         if (descriptionMatrix[i][j] >= 0.8 &&
             !(set.containsKey(productsController.products[j].ProductName))) {
           data.add(productsController.products[j]);
           set[productsController.products[j].ProductName] = 1;
-
-        
         }
       }
 
@@ -76,16 +46,12 @@ class RecommendationController extends GetxController {
   }
 
   void getRecomandedList(ProductModel productModel) {
-   for (ProductModel pro in recomanderList[productModel]) {
-
-   
+    for (ProductModel pro in recomanderList[productModel]) {
       if (!(userController.userModel.value.historyList.contains(pro))) {
         userController.updateUserData({
           "history_list": FieldValue.arrayUnion([pro.toJson()])
         });
       }
-
-
     }
   }
 
@@ -97,13 +63,6 @@ class RecommendationController extends GetxController {
     } catch (e) {
       Get.snackbar("Eroor", "Cannot remove this item");
       debugPrint(e.message);
-
     }
   }
-
-/* 
-
-
-*/
-
 }

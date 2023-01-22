@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/controllers/orderController.dart';
@@ -31,6 +32,7 @@ class Orderwidgetnew extends StatefulWidget {
 
 class _OrderwidgetnewState extends State<Orderwidgetnew> {
   var deviceToken = " ";
+  Random rand;
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +124,8 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
             onPressed: () {
               orderController.updateState(widget.order.orderid);
               getDeviceToken(widget.order.userid);
-              sendPushMessage(deviceToken, "Hello", "your order done ");
+              sendPushMessage(deviceToken, "Hello",
+                  "${rand.nextInt(10000).toString()}your order done ");
               print(deviceToken);
               // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
               //   print('Got a message whilst in the foreground!');
