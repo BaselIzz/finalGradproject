@@ -76,10 +76,8 @@ class ProductsController extends GetxController {
   }
 
   void getmeso() async {
-    List<String> list_of_id = <String>[];
-
     for (int i = 0; i < productsController.products.length; i++) {
-      list_of_id.clear();
+      List<String> list_of_id = <String>[];
       list_of_id.add(productsController.products[i].caffeteriaid);
       for (int j = 0; j < productsController.products.length; j++) {
         if (productsController.products[i].ProductName ==
@@ -88,27 +86,35 @@ class ProductsController extends GetxController {
           list_of_id.add(productsController.products[j].caffeteriaid);
         }
       }
-      hashMap.putIfAbsent(
-          productsController.products[i].ProductName, () => list_of_id);
-      print(list_of_id.length);
-      print(hashMap[productsController.products[i].ProductName]);
+      hashMap[productsController.products[i].ProductName] = list_of_id;
     }
   }
 
-  void getcafeteriaAfterPressingInRecomandedmeal() async {
-    CollectionReference cafeteriaCollection =
-        FirebaseFirestore.instance.collection('cafeteria');
+  // Stream<List<CafeteriaModel>>  getcafeteriaAfterPressingInRecomandedmeal(ProductModel productModel) async =>  firebaseFirestore.collection(collection)
+  //       .where("id" , whereIn: hashMap[productModel.ProductName]).snapshots()
+  //       .map((event) => event.docs
+  //       .map((e) => CafeteriaModel.fromSnapshot(e.data())).toList());
 
-    await cafeteriaCollection
-        .where("id", whereIn: ["tBv0ganKL4dNta2Wd615", "E165llb3JxaY7Ez5a94c"])
-        .get()
-        .then((value) {
-          value.docs.forEach((element) {
-            print(element.data());
-            print("%%%%%%%%%%%%%%%");
-          });
-        });
-  }
+  Stream<List<CafeteriaModel>> getcafeteriaAfterPressingInRecomandedmeal(
+          String productname) =>
+      firebaseFirestore
+          .collection("cafeteria")
+          .where("id", whereIn: hashMap[productname])
+          .snapshots()
+          .map((event) => event.docs
+              .map((e) => CafeteriaModel.fromSnapshot(e.data()))
+              .toList());
+
+  /*
+
+
+   Stream<List<CafeteriaModel>> getAllcafeteria() => firebaseFirestore
+      .collection(collection)
+      .snapshots()
+      .map((event) => event.docs
+          .map((item) => CafeteriaModel.fromSnapshot(item.data()))
+          .toList());
+  */
 
   bool isadded(ProductModel product) {
     return products.where((p0) => p0 == product).isNotEmpty;
