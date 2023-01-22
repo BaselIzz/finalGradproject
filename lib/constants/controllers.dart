@@ -6,6 +6,7 @@ import '../controllers/appController.dart';
 import '../controllers/authController.dart';
 import '../controllers/cart_controller.dart';
 import '../controllers/product_controller.dart';
+import '../controllers/recomendationController.dart';
 
 AppController appController = AppController.instance;
 UserController userController = UserController.instance;
@@ -14,3 +15,5 @@ ProductsController productsController = ProductsController.instace;
 CartController cartController = CartController.instance;
 CaffetriaController caffetriaController = CaffetriaController.instace;
 OrderController orderController = OrderController.instace;
+RecommendationController recommendationController =
+    RecommendationController.instace;

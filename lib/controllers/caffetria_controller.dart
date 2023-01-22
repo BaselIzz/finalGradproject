@@ -46,6 +46,12 @@ class CaffetriaController extends GetxController {
     });
   }
 
+  // void getCaferteriaHasThisMeal() async {
+  //   CollectionReference usersref = firebaseFirestore.collection("product");
+  //   await usersref
+  //       .where("product_name", isEqualTo: "ms7ab");
+  // }
+
   String getCaffeterianame(String cafeteriaid) {
     CafeteriaModel caf =
         cafeterias.where((p0) => p0.cafeteriaId == cafeteriaid).first;

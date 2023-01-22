@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/model/cafeteria.dart';
 import 'package:gradutionfinalv/model/product.dart';
+import 'package:gradutionfinalv/screens/Caffetria_screenForRecomandedMeal.dart';
 import 'package:gradutionfinalv/screens/products.screen.dart';
 import 'package:gradutionfinalv/widget/ProductWidget.dart';
 
 import '../values/values.dart';
 import 'card_tags.dart';
 
-class FoodyBiteCard extends StatelessWidget {
+class RecomandedByCar extends StatelessWidget {
   final String status;
   final String imagePath;
   final String cardTitle;
@@ -20,8 +21,8 @@ class FoodyBiteCard extends StatelessWidget {
   final double cardHeight;
   final double imageHeight;
   final double cardElevation;
-  final CafeteriaModel caffeteria;
-  FoodyBiteCard({
+  final ProductModel productModel;
+  RecomandedByCar({
     this.status = "OPEN",
     this.imagePath,
     this.cardTitle,
@@ -32,14 +33,15 @@ class FoodyBiteCard extends StatelessWidget {
     this.onTap,
     this.isThereStatus = true,
     this.cardElevation = 2.0,
-    this.caffeteria,
+    this.productModel,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(ProductScreens(caffeteria.cafeteriaId));
+        String name = productModel.ProductName.toString();
+        Get.to(CafeteriaScreenForRecomandedMeal(productModel.ProductName));
       },
       child: Container(
         width: width,
@@ -47,7 +49,7 @@ class FoodyBiteCard extends StatelessWidget {
         child: Card(
           elevation: cardElevation,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(4),
           ),
           child: Stack(children: <Widget>[
             Positioned(
@@ -73,7 +75,7 @@ class FoodyBiteCard extends StatelessWidget {
                         Row(
                           children: <Widget>[
                             Text(
-                              caffeteria.cafeteriaName,
+                              productModel.ProductName,
                               textAlign: TextAlign.left,
                               style: Styles.customTitleTextStyle(
                                 color: AppColors.headingText,

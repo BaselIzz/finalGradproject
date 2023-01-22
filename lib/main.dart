@@ -11,6 +11,7 @@ import 'app.dart';
 import 'controllers/appController.dart';
 import 'controllers/authController.dart';
 import 'controllers/caffetria_controller.dart';
+import 'controllers/recomendationController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,13 +19,14 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
       name: "finalCafeteriaSystem");
 
-  await initialization.then((value) {
+  await initialization.then((value) async {
     Get.put(AppController());
     Get.put(UserController());
     Get.put(CaffetriaController());
     Get.put(ProductsController());
     Get.put(CartController());
     Get.put(OrderController());
+    Get.put(RecommendationController());
   });
 
   runApp(App());
