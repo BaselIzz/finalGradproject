@@ -39,7 +39,7 @@ class ProductModel {
   ProductModel.fromMap(Map<String, dynamic> data) {
     ProductID = data[ID];
     ProductName = data[NAME];
-    // description = data[DESCIPTION];
+    description = data[DESCIPTION];
     ProductPrice = data[PRICE];
     ProductPhoto = data[PHOTO];
     caffeteriaid = data[CAFFETERIAID];

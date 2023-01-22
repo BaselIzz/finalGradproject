@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:gradutionfinalv/constants/controllers.dart';
+import 'package:string_similarity/string_similarity.dart';
 
 import '../constants/firebase.dart';
 import '../model/product.dart';
@@ -7,6 +9,8 @@ import '../model/product.dart';
 class ProductsController extends GetxController {
   static ProductsController instace = Get.find();
   RxList<ProductModel> products = RxList<ProductModel>([]);
+  RxMap<ProductModel, List<ProductModel>> Reclist =
+      RxMap<ProductModel, List<ProductModel>>();
   String collection = "product";
   @override
   void onReady() {
@@ -50,6 +54,32 @@ class ProductsController extends GetxController {
 
   bool isadded(ProductModel product) {
     return products.where((p0) => p0 == product).isNotEmpty;
+  }
+
+  WorkerCallback<List<ProductModel>> getrecomander() {
+    Reclist.clear();
+    List<List<double>> descriptionMatrix = [];
+    for (var i = 0; i < products.length; i++) {
+      descriptionMatrix.add([]);
+      for (var j = 0; j < products.length; j++) {
+        var similarity = StringSimilarity.compareTwoStrings(
+            products[i].description, products[j].description);
+        descriptionMatrix[i].add(similarity);
+      }
+    }
+    List<ProductModel> data = [];
+    // Print the similarity scores for the first meal
+    for (var i = 0; i < products.length; i++) {
+      for (var j = 0; j < products.length; j++) {
+        if (descriptionMatrix[i][j] >= 0.5) {
+          print(
+              "${products[i].ProductName} and ${products[j].ProductName}   ${descriptionMatrix[i][j]}");
+          data.add(products[j]);
+        }
+      }
+      Reclist.putIfAbsent(products[i], () => data);
+    }
+    return null;
   }
 
   // Stream<List<ProductModel>> getforcaff() => firebaseFirestore

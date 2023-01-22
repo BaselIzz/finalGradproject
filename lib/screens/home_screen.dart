@@ -8,17 +8,11 @@ import '../widget/heading_row.dart';
 import 'caffeteria_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  // List<Category> categorys = [
-  //   Category("SoftDrinks",
-  //       "https://th.bing.com/th/id/R.a779dfc4a5ba54b3f92f274bd265a833?rik=9%2br3rXteMLqMcA&pid=ImgRaw&r=0"),
-  //   Category("Pizza",
-  //       "https://heavy.com/wp-content/uploads/2020/12/GettyImages-133281966-e1608688624818.jpg?quality=65&strip=all"),
-  //   Category("HotDrinks",
-  //       "https://th.bing.com/th/id/OIP._VvmTz5uvGZ0J9drdmGtQAHaE5?pid=ImgDet&rs=1")
-  // ];
-
   @override
   Widget build(BuildContext context) {
+    productsController.getrecomander();
+    ;
+
     return Scaffold(
       body: Column(
         children: [
@@ -39,7 +33,18 @@ class HomeScreen extends StatelessWidget {
           Container(
               height: 170,
               width: MediaQuery.of(context).size.width,
-              child: CaffeteriaItems())
+              child: CaffeteriaItems()),
+          SizedBox(
+            height: 16,
+          ),
+          HeadingRow(
+            onTapOfNumber: () {
+              Get.to(CaffeteriaScreen());
+            },
+            title: "Caffeterias",
+            number:
+                'View more (${productsController.Reclist.length.toString()})',
+          ),
         ],
       ),
     );
