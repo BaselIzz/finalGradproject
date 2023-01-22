@@ -41,6 +41,7 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: 50,
           ),
+
           Obx(
             () => HeadingRow(
               onTapOfNumber: () {},
@@ -48,6 +49,7 @@ class HomeScreen extends StatelessWidget {
               number:
                   'View more (${userController.userModel.value.historyList.length})',
             ),
+
           ),
           SizedBox(
             height: 16,
