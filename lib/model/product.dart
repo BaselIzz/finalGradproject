@@ -46,4 +46,15 @@ class ProductModel {
     is_Exist = data[EXIST] ?? false;
     ProductTime = data[Time];
   }
+
+  Map toJson() => {
+        ID: ProductID,
+        NAME: ProductName,
+        DESCIPTION: description,
+        PRICE: ProductPrice,
+        PHOTO: ProductPhoto,
+        CAFFETERIAID: caffeteriaid,
+        EXIST: is_Exist ?? true,
+        Time: ProductTime,
+      };
 }

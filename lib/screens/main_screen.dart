@@ -45,6 +45,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    recommendationController.getrecomander();
+    productsController.getmeso();
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
     

@@ -66,6 +66,7 @@ class SingleProductWidget extends StatelessWidget {
                   icon: Icon(Icons.add_shopping_cart),
                   onPressed: () {
                     cartController.addProductTocart(product);
+                    recommendationController.getRecomandedList(product);
                   })
             ],
           ),
