@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
     productsController.getmeso();
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -79,7 +79,17 @@ class _MainScreenState extends State<MainScreen> {
                 color: Colors.black87,
               ),
               title: Text("Log out"),
-            )
+            ),
+            ListTile(
+              onTap: () {
+                recommendationController.clearHistory();
+              },
+              leading: Icon(
+                Icons.exit_to_app,
+                color: Colors.black87,
+              ),
+              title: Text("Clear Recomandation"),
+            ),
           ],
         ),
       ),

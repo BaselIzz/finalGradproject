@@ -31,15 +31,26 @@ class FinishedOrderWidget extends StatelessWidget {
             ),
           ],
           rows: [
-            DataRow(cells: [
-              DataCell(Text(getOrderedBy(order.useremail))),
-              DataCell(Text(getProducts(order.order))),
-              DataCell(Text(order.totalprice)),
-              DataCell(IconButton(
-                icon: Icon(Icons.done, size: 20),
-                onPressed: () => orderController.updateSarved(order.orderid),
-              ))
-            ])
+            DataRow(
+                color: MaterialStateColor.resolveWith((states) {
+                  {
+                    if (order.payment) {
+                      return Colors.blue;
+                    } else {
+                      return Colors.red;
+                    }
+                  }
+                }),
+                cells: [
+                  DataCell(Text(getOrderedBy(order.useremail))),
+                  DataCell(Text(getProducts(order.order))),
+                  DataCell(Text(order.totalprice)),
+                  DataCell(IconButton(
+                    icon: Icon(Icons.done, size: 20),
+                    onPressed: () =>
+                        orderController.updateSarved(order.orderid),
+                  ))
+                ])
           ],
         ),
       ),

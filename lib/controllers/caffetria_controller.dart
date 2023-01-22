@@ -35,7 +35,7 @@ class CaffetriaController extends GetxController {
       "email": caffeteia.email,
       "is_Active": false,
       "id": addcaf.id,
-      // "Photo":
+      "image": caffeteia.Caf_img
     });
   }
 

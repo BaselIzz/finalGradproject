@@ -22,9 +22,8 @@ class CaffeteriaItemScreen extends StatelessWidget {
                   .map((CafeteriaModel caffeteria) {
                 return FoodyBiteCard(
                   caffeteria: caffeteria,
-                  //cardTitle: "pizza",
-                  imagePath:
-                      "https://heavy.com/wp-content/uploads/2020/12/GettyImages-133281966-e1608688624818.jpg?quality=65&strip=all",
+                  //==cardTitle: "pizza",
+                  imagePath: caffeteria.Caf_img,
                   imageHeight: 100,
                   cardHeight: 170,
                 );

@@ -394,19 +394,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         key: formKey,
         child: Column(children: <Widget>[
-          // _buildDropdownlist(),
-          // SizedBox(
-          //   height: 20,
-          // ),
-          //_buildUsername(),
-          //  SizedBox(
-          //  height: 16,
-          // ),
           _buildName(),
-          // SizedBox(
-          //   height: 16,
-          // ),
-          // _buildPhonenumber(),
           SizedBox(
             height: 16,
           ),
@@ -419,92 +407,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
-  // Future<String> createrCustomer(
-  //     {required String username,
-  //     required String major,
-  //     required String password,
-  //     required String email,
-  //     required String verifcationCode,
-  //     required String phonenumber,
-  //     required String name}) async {
-  //   var url = Uri.parse('http://192.168.0.189:8080/api/save/customer');
-  //   print("object----asdas--------------------");
-  //   http.Response response = await http.post(url,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: json.encode(<String, String>{
-  //         "username": username,
-  //         "password": password,
-  //         "verifcationCode": verifcationCode,
-  //         "email": email,
-  //         "phoneNumber": phonenumber,
-  //         "name": name,
-  //         "major": major,
-  //       }));
-
-  //   print(
-  //       "object+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
-  //   if (response.body.toString() == "ok") {
-  //     final message = 'Successfull';
-  //     final snackBar = SnackBar(
-  //       content: Text(
-  //         message,
-  //         style: const TextStyle(fontSize: 20),
-  //       ),
-  //       backgroundColor: Colors.green,
-  //     );
-  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //   } else {
-  //     final message = 'this email is already registert';
-  //     final snackBar = SnackBar(
-  //       content: Text(
-  //         message,
-  //         style: const TextStyle(fontSize: 20),
-  //       ),
-  //       backgroundColor: Colors.red,
-  //     );
-  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //   }
-
-  //   return response.body.toString();
-  // }
-
-  // Future SendEmail({
-  //   required String name,
-  //   required String email,
-  //   required String subject,
-  //   required String message,
-  // }) async {
-  //   final serviceId = 'service_zez769j';
-  //   final templateid = 'template_fti765m';
-  //   final userId = 'VVeXoWCl-kuUPi7gn';
-  //   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
-  //   final response = await http.post(
-  //     url,
-  //     headers: {
-  //       'origin': 'http://localhost',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: json.encode({
-  //       'service_id': serviceId,
-  //       'template_id': templateid,
-  //       'user_id': userId,
-  //       'template_params': {
-  //         'user_name': name,
-  //         'user_email': email,
-  //         'user_subject': subject,
-  //         'user_message': message,
-  //       },
-  //     }),
-  //   );
-  // }
-
-  // String getRandString(int len) {
-  //   var random = Random.secure();
-  //   var values = List<int>.generate(len, (i) => random.nextInt(255));
-  //   return base64UrlEncode(values);
-  // }
 }
