@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
+import 'package:string_similarity/string_similarity.dart';
 import 'package:gradutionfinalv/model/cafeteria.dart';
 
 import '../constants/firebase.dart';
@@ -11,6 +12,7 @@ import '../model/product.dart';
 class ProductsController extends GetxController {
   static ProductsController instace = Get.find();
   RxList<ProductModel> products = RxList<ProductModel>([]);
+
   List<String> show = <String>[];
   HashMap<String, List<String>> hashMap = HashMap<String, List<String>>();
 
