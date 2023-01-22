@@ -15,7 +15,7 @@ class CafeteriaScreenForRecomandedMeal extends StatelessWidget {
         appBar: AppBar(
             centerTitle: true,
             backgroundColor: Colors.black,
-            title: Text("Cafeteriaes")),
+            title: Text("Cafeteriaes ${name}")),
         body: Text("malik ${productsController.hashMap[name].toList()}"));
   }
 }

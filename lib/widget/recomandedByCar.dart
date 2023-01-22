@@ -40,7 +40,11 @@ class RecomandedByCar extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        String name = productModel.ProductName.toString();
+        RxList<CafeteriaModel> rxList = RxList();
+        print(productModel.ProductName);
+        rxList.bindStream(
+            productsController.getcafeteriaAfterPressingInRecomandedmeal(
+                productModel.ProductName));
         Get.to(CafeteriaScreenForRecomandedMeal(productModel.ProductName));
       },
       child: Container(

@@ -47,9 +47,11 @@ class HomeScreen extends StatelessWidget {
             height: 50,
           ),
           HeadingRow(
-            onTapOfNumber: () {},
+            onTapOfNumber: () {
+              //Get.to(ProductScreens(cafeteriaId))
+            },
             title: "Recmoandation Meals ",
-            number: 'View more (${recommendationController.Reclist.length})',
+            number: 'View more ',
           ),
           SizedBox(
             height: 16,
