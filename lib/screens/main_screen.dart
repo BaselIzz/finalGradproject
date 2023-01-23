@@ -22,7 +22,7 @@ int index = 0;
 class _MainScreenState extends State<MainScreen> {
   List<Widget> screens = [
     HomeScreen(),
-    //SearchScreen(),
+    SearchScreen(),
     CartScreen(),
     OrderScreen()
   ];
@@ -30,6 +30,11 @@ class _MainScreenState extends State<MainScreen> {
     const Icon(
       Icons.home_outlined,
       semanticLabel: "HomeScreen",
+      size: 30,
+    ),
+    const Icon(
+      Icons.search,
+      semanticLabel: "SerchScreem",
       size: 30,
     ),
     const Icon(

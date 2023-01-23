@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/controllers/orderController.dart';
 import 'package:gradutionfinalv/model/order_item.dart';
@@ -124,28 +125,27 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
             onPressed: () {
               orderController.updateState(widget.order.orderid);
               getDeviceToken(widget.order.userid);
-              sendPushMessage(deviceToken, "Hello",
-                  "${rand.nextInt(10000).toString()}your order done ");
+              sendPushMessage(deviceToken, "Hello", "your order done ");
               print(deviceToken);
-              // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-              //   print('Got a message whilst in the foreground!');
-              //   print('Message data: ${message.data}');
-
-              //   if (message.notification != null) {
-              //     print(
-              //         'Message also contained a notification: ${message.notification}');
-              //   }
-              // });
             },
-            child: Text("Done"))
+            child: Text("Done")),
       ]),
     );
   }
 
   @override
   void initState() {
-    super.initState();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
     getDeviceToken(widget.order.userid);
+
+    super.initState();
   }
 
   Future getDeviceToken(String userId) async {
