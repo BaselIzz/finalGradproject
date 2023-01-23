@@ -62,7 +62,6 @@ class UserController extends GetxController {
         String _userId = result.user.uid;
 
         insitializeusermodel(_userId);
-        getToken(_userId);
         _clearControllers();
       });
     } catch (e) {
@@ -85,6 +84,7 @@ class UserController extends GetxController {
 
         insitializeusermodel(_userId);
         getToken(_userId);
+
         _clearControllers();
       });
     } catch (e) {
@@ -97,7 +97,7 @@ class UserController extends GetxController {
   void getToken(String userid) async {
     await FirebaseMessaging.instance.getToken().then((token) {
       firebaseFirestore.collection("UserTokens").doc(userid).update({
-        'token': token,
+        'token': "12312312321",
       });
     });
   }

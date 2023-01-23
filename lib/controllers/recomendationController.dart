@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -57,16 +56,13 @@ class RecommendationController extends GetxController {
     }
     for (var i = 0; i < productsController.products.length; i++) {
       List<ProductModel> data = <ProductModel>[];
-      HashMap<String, int> set = HashMap();
+      Map<String, int> set = Map();
 
       for (var j = 0; j < productsController.products.length; j++) {
-
-        if (descriptionMatrix[i][j] >= 0.8 &&
+        if (descriptionMatrix[i][j] >= 0.5 &&
             !(set.containsKey(productsController.products[j].ProductName))) {
           data.add(productsController.products[j]);
           set[productsController.products[j].ProductName] = 1;
-
-        
         }
       }
 
@@ -76,16 +72,12 @@ class RecommendationController extends GetxController {
   }
 
   void getRecomandedList(ProductModel productModel) {
-   for (ProductModel pro in recomanderList[productModel]) {
-
-   
+    for (ProductModel pro in recomanderList[productModel]) {
       if (!(userController.userModel.value.historyList.contains(pro))) {
         userController.updateUserData({
           "history_list": FieldValue.arrayUnion([pro.toJson()])
         });
       }
-
-
     }
   }
 
@@ -97,7 +89,6 @@ class RecommendationController extends GetxController {
     } catch (e) {
       Get.snackbar("Eroor", "Cannot remove this item");
       debugPrint(e.message);
-
     }
   }
 
