@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/widget/ProductWidget.dart';
 
 class ProductScreens extends StatelessWidget {
@@ -14,7 +15,8 @@ class ProductScreens extends StatelessWidget {
         appBar: AppBar(
             centerTitle: true,
             backgroundColor: Colors.black,
-            title: Text("Products")),
+            title:
+                Text("${caffetriaController.getCaffeterianame(cafeteriaId)}")),
         body: ProductsWidget(cafeteriaId));
   }
 }

@@ -35,7 +35,7 @@ class CaffetriaController extends GetxController {
       "email": caffeteia.email,
       "is_Active": false,
       "id": addcaf.id,
-      // "Photo":
+      "image": caffeteia.Caf_img
     });
   }
 
@@ -56,6 +56,12 @@ class CaffetriaController extends GetxController {
     CafeteriaModel caf =
         cafeterias.where((p0) => p0.cafeteriaId == cafeteriaid).first;
     return caf.cafeteriaName;
+  }
+
+  CafeteriaModel getCaffeteria(cafeteriaid) {
+    CafeteriaModel caf =
+        cafeterias.where((p0) => p0.cafeteriaId == cafeteriaid).first;
+    return caf;
   }
 
   void addSecdule(Secdule secdule) async {

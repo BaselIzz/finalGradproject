@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:gradutionfinalv/constants/controllers.dart';
+import 'package:gradutionfinalv/constants/firebase.dart';
 import 'package:gradutionfinalv/model/cafeteria.dart';
 import 'package:gradutionfinalv/widget/caffeteriashow.dart';
 import 'package:gradutionfinalv/widget/custom_text.dart';
@@ -32,7 +36,7 @@ class SingleCaffeteriaitem extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                   child: Image.network(
-                    "https://heavy.com/wp-content/uploads/2020/12/GettyImages-133281966-e1608688624818.jpg?quality=65&strip=all",
+                    Caffeteia.Caf_img,
                     width: 200,
                     height: 100,
                     fit: BoxFit.contain,
