@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class CafeteriaModel {
   static const HASUSER = "hasuser";
@@ -6,19 +7,22 @@ class CafeteriaModel {
   static const NAME = "name";
   static const EMAIL = "email";
   static const IS_ACTIVE = "is_Active";
+  static const Photo = "image";
 
   String cafeteriaId;
   String cafeteriaName;
   bool is_Active;
   bool hasuser;
   String email;
+  String Caf_img;
 
   CafeteriaModel(
       {this.cafeteriaId,
       this.cafeteriaName,
       this.email,
       this.hasuser,
-      this.is_Active});
+      this.is_Active,
+      this.Caf_img});
 
   CafeteriaModel.fromSnapshot(Map<String, dynamic> data) {
     cafeteriaName = data[NAME];
@@ -26,5 +30,6 @@ class CafeteriaModel {
     email = data[EMAIL].toString();
     is_Active = data[IS_ACTIVE] ?? false;
     hasuser = data[HASUSER] ?? false;
+    Caf_img = data[Photo].toString();
   }
 }

@@ -48,12 +48,13 @@ class RecomandedByCar extends StatelessWidget {
         Get.to(CafeteriaScreenForRecomandedMeal(productModel.ProductName));
       },
       child: Container(
+        margin: EdgeInsets.all(5),
         width: width,
         height: cardHeight,
         child: Card(
           elevation: cardElevation,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(40),
           ),
           child: Stack(children: <Widget>[
             Positioned(
@@ -61,7 +62,7 @@ class RecomandedByCar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(20),
                     child: Image.network(
                       imagePath,
                       width: MediaQuery.of(context).size.width,
@@ -71,8 +72,8 @@ class RecomandedByCar extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(
-                      horizontal: Sizes.MARGIN_16,
-                      vertical: Sizes.MARGIN_16,
+                      horizontal: 5,
+                      vertical: 5,
                     ),
                     child: Column(
                       children: <Widget>[
@@ -80,34 +81,12 @@ class RecomandedByCar extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               productModel.ProductName,
-                              textAlign: TextAlign.left,
+                              textAlign: TextAlign.center,
                               style: Styles.customTitleTextStyle(
-                                color: AppColors.headingText,
-                                fontWeight: FontWeight.w600,
-                                fontSize: Sizes.TEXT_SIZE_20,
+                                color: Color.fromARGB(255, 11, 13, 54),
+                                fontWeight: FontWeight.w800,
+                                fontSize: 15,
                               ),
-                            ),
-                            //          SizedBox(width: Sizes.WIDTH_4),
-                            // CardTags(
-                            //   title: caffeteria.name,
-                            //   decoration: BoxDecoration(
-                            //     gradient: Gradients.secondaryGradient,
-                            //     boxShadow: [
-                            //       Shadows.secondaryShadow,
-                            //     ],
-                            //   ),
-                            // ),
-                            SizedBox(width: 5.0),
-                            Spacer(
-                              flex: 1,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: SizedBox(height: 12.0),
-                                ),
-                              ],
                             ),
                           ],
                         ),

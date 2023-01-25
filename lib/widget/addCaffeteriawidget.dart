@@ -191,6 +191,7 @@ class _AddcafeteriaWidgetState extends State<AddcafeteriaWidget> {
                                 final isValid = formkey.currentState.validate();
                                 if (isValid) {
                                   CafeteriaModel caf = CafeteriaModel(
+                                      Caf_img: donloadUrl,
                                       cafeteriaId: "",
                                       cafeteriaName:
                                           caffeterianamecontroller.text,

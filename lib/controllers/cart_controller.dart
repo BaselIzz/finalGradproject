@@ -109,6 +109,33 @@ class CartController extends GetxController {
     if (userController.userModel.value.cart.isNotEmpty) {
       final doc = FirebaseFirestore.instance.collection("orders").doc();
       final jason = {
+        "payment": false,
+        "served": false,
+        "cafeteriaid": cart.cafeteriaId.toString(),
+        "order": userController.userModel.value.cart
+            .map((e) => e.toJsonOreder())
+            .toList(),
+        "orderid": doc.id,
+        "createdby": userController.userModel.value.name,
+        "time": DateTime.now().toString(),
+        "status": "notDone",
+        "useremail": userController.userModel.value.email,
+        "totalprice": cartController.totalCartPrice.toString(),
+        "userid": userController.userModel.value.id,
+      };
+      await doc.set(jason);
+      clearcart();
+    } else {
+      Get.snackbar("The cart is empty", "you cant order an empty cart");
+    }
+  }
+
+  void makePayOrder() async {
+    CartItemModel cart = userController.userModel.value.cart.first;
+    if (userController.userModel.value.cart.isNotEmpty) {
+      final doc = FirebaseFirestore.instance.collection("orders").doc();
+      final jason = {
+        "payment": true,
         "served": false,
         "cafeteriaid": cart.cafeteriaId.toString(),
         "order": userController.userModel.value.cart

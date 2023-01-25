@@ -22,7 +22,7 @@ int index = 0;
 class _MainScreenState extends State<MainScreen> {
   List<Widget> screens = [
     HomeScreen(),
-    //SearchScreen(),
+    SearchScreen(),
     CartScreen(),
     OrderScreen()
   ];
@@ -30,6 +30,11 @@ class _MainScreenState extends State<MainScreen> {
     const Icon(
       Icons.home_outlined,
       semanticLabel: "HomeScreen",
+      size: 30,
+    ),
+    const Icon(
+      Icons.search,
+      semanticLabel: "SerchScreem",
       size: 30,
     ),
     const Icon(
@@ -50,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
     productsController.getmeso();
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -80,7 +85,17 @@ class _MainScreenState extends State<MainScreen> {
                 color: Colors.black87,
               ),
               title: Text("Log out"),
-            )
+            ),
+            ListTile(
+              onTap: () {
+                recommendationController.clearHistory();
+              },
+              leading: Icon(
+                Icons.exit_to_app,
+                color: Colors.black87,
+              ),
+              title: Text("Clear Recomandation"),
+            ),
           ],
         ),
       ),

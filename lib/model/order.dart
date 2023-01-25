@@ -12,7 +12,7 @@ class orderModel {
   static const UIDUser = "userid";
   static const NameCreated = "createdby";
   static const SARVED = "sarved";
-
+  static const PAYMENT = "payment";
   String cafeteriaid;
   List<OrderItemModel> order;
   String orderid;
@@ -23,6 +23,7 @@ class orderModel {
   String status;
   String createdby;
   bool sarved;
+  bool payment;
   orderModel(
       {this.cafeteriaid,
       this.orderid,
@@ -33,7 +34,8 @@ class orderModel {
       this.userid,
       this.createdby,
       this.order,
-      this.sarved});
+      this.sarved,
+      this.payment});
   orderModel.fromMap(Map<String, dynamic> data) {
     cafeteriaid = data[CAFFETERIAID];
     time = data[TIME];
@@ -44,6 +46,7 @@ class orderModel {
     status = data[STATUS];
     createdby = data[NameCreated];
     sarved = data[SARVED] ?? false;
+    payment = data[PAYMENT] ?? false;
     order = _convertCartItems(List.from(data[OREDER] ?? []));
   }
   List<OrderItemModel> _convertCartItems(List cartFomDb) {

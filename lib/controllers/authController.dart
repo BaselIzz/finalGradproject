@@ -99,6 +99,7 @@ class UserController extends GetxController {
       firebaseFirestore.collection("UserTokens").doc(userid).set({
         'token': token,
       });
+      logger.i({"$token": "GetToken"});
     });
   }
 
@@ -112,6 +113,7 @@ class UserController extends GetxController {
         String _userId = result.user.uid;
         _addUserToFirestore(_userId);
         _clearControllers();
+
         auth.currentUser.sendEmailVerification();
       });
     } catch (e) {

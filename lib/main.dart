@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/firebase.dart';
@@ -14,7 +15,7 @@ import 'controllers/authController.dart';
 import 'controllers/caffetria_controller.dart';
 import 'controllers/recomendationController.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -29,6 +30,5 @@ void main() async {
     Get.put(OrderController());
     Get.put(RecommendationController());
   });
-
   runApp(App());
 }

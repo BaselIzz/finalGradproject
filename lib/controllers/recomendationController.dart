@@ -14,32 +14,6 @@ class RecommendationController extends GetxController {
       RxMap<ProductModel, List<ProductModel>>();
   List<ProductModel> list = <ProductModel>[];
 
-  // getrecomander() {
-  //   List<List<double>> descriptionMatrix = [];
-
-  //   for (var i = 0; i < productsController.products.length; i++) {
-  //     descriptionMatrix.add([]);
-  //     for (var j = 0; j < productsController.products.length; j++) {
-  //       var similarity = StringSimilarity.compareTwoStrings(
-  //           productsController.products[i].description,
-  //           productsController.products[j].description);
-  //       descriptionMatrix[i].add(similarity);
-  //     }
-  //   }
-
-  //   // Print the similarity scores for the first meal
-  //   for (var i = 0; i < productsController.products.length; i++) {
-  //     List<ProductModel> data = <ProductModel>[];
-  //     for (var j = 0; j < productsController.products.length; j++) {
-  //       if (descriptionMatrix[i][j] >= 0.8) {
-  //         data.add(productsController.products[j]);
-  //       }
-  //     }
-
-  //     recomanderList.putIfAbsent(productsController.products[i], () => data);
-  //   }
-  // }
-
   getissa() {
     List<List<double>> descriptionMatrix = [];
     RxMap<ProductModel, List<ProductModel>> Reclist =
@@ -91,10 +65,4 @@ class RecommendationController extends GetxController {
       debugPrint(e.message);
     }
   }
-
-/* 
-
-
-*/
-
 }

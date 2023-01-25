@@ -22,8 +22,7 @@ class CaffeteriaItems extends StatelessWidget {
               caffetriaController.cafeterias.map((CafeteriaModel caffeteria) {
             return FoodyBiteCard(
               caffeteria: caffeteria,
-              imagePath:
-                  "https://heavy.com/wp-content/uploads/2020/12/GettyImages-133281966-e1608688624818.jpg?quality=65&strip=all",
+              imagePath: caffeteria.Caf_img,
             );
           }).toList()),
     );
