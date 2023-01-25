@@ -35,7 +35,7 @@ class FinishedOrderWidget extends StatelessWidget {
                 color: MaterialStateColor.resolveWith((states) {
                   {
                     if (order.payment) {
-                      return Colors.blue;
+                      return Colors.green;
                     } else {
                       return Colors.red;
                     }

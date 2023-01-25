@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: 16,
+            height: 20,
           ),
           Obx(
             () => HeadingRow(
@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
             height: 16,
           ),
           Container(
-              height: 170,
+              height: 175,
               width: MediaQuery.of(context).size.width,
               child: RecomandedItems()),
         ],

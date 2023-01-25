@@ -4,7 +4,7 @@ class VendorModel {
   static const ID = "id";
   static const NAME = "name";
   static const EMAIL = "email";
-  static const CAFFETERIAID = "caffeteriaid";
+  static const CAFFETERIAID = "cafeteriaid";
   static const ROLE = "role";
 
   String id;

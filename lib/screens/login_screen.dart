@@ -19,8 +19,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordVisible = true;
-  // String? password = "";
-  // String? Email = "";
 
   final formKey = GlobalKey<FormState>();
   @override

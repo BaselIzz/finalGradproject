@@ -12,34 +12,7 @@ class RecommendationController extends GetxController {
   static RecommendationController instace = Get.find();
   RxMap<ProductModel, List<ProductModel>> recomanderList =
       RxMap<ProductModel, List<ProductModel>>();
-  List<ProductModel> list = List();
-
-  // getrecomander() {
-  //   List<List<double>> descriptionMatrix = [];
-
-  //   for (var i = 0; i < productsController.products.length; i++) {
-  //     descriptionMatrix.add([]);
-  //     for (var j = 0; j < productsController.products.length; j++) {
-  //       var similarity = StringSimilarity.compareTwoStrings(
-  //           productsController.products[i].description,
-  //           productsController.products[j].description);
-  //       descriptionMatrix[i].add(similarity);
-  //     }
-  //   }
-
-  //   // Print the similarity scores for the first meal
-  //   for (var i = 0; i < productsController.products.length; i++) {
-  //     List<ProductModel> data = <ProductModel>[];
-  //     for (var j = 0; j < productsController.products.length; j++) {
-  //       if (descriptionMatrix[i][j] >= 0.8) {
-  //         data.add(productsController.products[j]);
-  //       }
-  //     }
-
-  //     recomanderList.putIfAbsent(productsController.products[i], () => data);
-  //   }
-  // }
-
+  List<ProductModel> list = <ProductModel>[];
   getissa() {
     List<List<double>> descriptionMatrix = [];
     RxMap<ProductModel, List<ProductModel>> Reclist =
@@ -57,9 +30,8 @@ class RecommendationController extends GetxController {
     for (var i = 0; i < productsController.products.length; i++) {
       List<ProductModel> data = <ProductModel>[];
       Map<String, int> set = Map();
-
       for (var j = 0; j < productsController.products.length; j++) {
-        if (descriptionMatrix[i][j] >= 0.5 &&
+        if (descriptionMatrix[i][j] >= 0.8 &&
             !(set.containsKey(productsController.products[j].ProductName))) {
           data.add(productsController.products[j]);
           set[productsController.products[j].ProductName] = 1;
