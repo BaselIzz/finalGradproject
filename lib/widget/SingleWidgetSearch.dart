@@ -44,9 +44,16 @@ class SingleProductSearch extends StatelessWidget {
             weight: FontWeight.bold,
           ),
           CustomText(
-            text: '${product.ProductTime}',
-            color: Colors.grey,
+            text: 'Time To Done: ${product.ProductTime}s',
+            color: Colors.black,
           ),
+          SizedBox(
+            height: 5,
+          ),
+          Obx(() => CustomText(
+                text:
+                    " Product in order: ${orderController.productinoreder(product).toString()}",
+              )),
           SizedBox(
             height: 5,
           ),

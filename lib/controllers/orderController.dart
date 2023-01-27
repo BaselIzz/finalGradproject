@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/model/order.dart';
+import 'package:gradutionfinalv/model/product.dart';
 
 import '../constants/firebase.dart';
 
@@ -24,6 +25,17 @@ class OrderController extends GetxController {
         .collection(collection)
         .doc(orderid)
         .update({'status': 'Done'});
+  }
+
+  int productinoreder(ProductModel productModel) {
+    int lenght = orders
+        .where((p0) =>
+            p0.cafeteriaid == productModel.caffeteriaid &&
+            productModel.ProductID == p0.order.first.productId &&
+            p0.status == "notDone")
+        .toList()
+        .length;
+    return lenght;
   }
 
   void reorder(orderModel order) {

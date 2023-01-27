@@ -137,7 +137,6 @@ class ShoppingCartWidget extends StatelessWidget {
                                     ]),
                                   )));
 
-                          //cartController.makeOrder();
                         }
                       }),
                 )))

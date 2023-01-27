@@ -38,11 +38,11 @@ dependencies:
   firebase_core: ^2.4.0
   firebase_messaging: ^14.1.4
   firebase_storage: ^11.0.8
-
-
   flutter:
     sdk: flutter
+  
   flutter_local_notifications: ^13.0.0
+  flutter_native_splash: ^2.2.17
   get: ^4.6.5
   http: ^0.13.5
   intl_phone_number_input: ^0.7.1
@@ -54,8 +54,16 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^2.0.0
+  
+
   flutter_test:
     sdk: flutter
+
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: asset/images/logo.png
+  android_gravity: fill
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
