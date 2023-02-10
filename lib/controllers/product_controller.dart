@@ -8,10 +8,14 @@ import 'package:gradutionfinalv/model/cafeteria.dart';
 
 import '../constants/firebase.dart';
 import '../model/product.dart';
+import '../utils/splayTree.dart';
 
 class ProductsController extends GetxController {
   static ProductsController instace = Get.find();
   RxList<ProductModel> products = RxList<ProductModel>([]);
+  //SplayTree<ProductModel> splayTree = SplayTree<ProductModel>();
+  List<ProductModel> Top10meals = RxList<ProductModel>([]);
+  HashMap<String, List<ProductModel>> mapForTop10ForEachCafeteria = HashMap();
 
   List<String> show = <String>[];
   HashMap<String, List<String>> hashMap = HashMap<String, List<String>>();
@@ -29,6 +33,53 @@ class ProductsController extends GetxController {
   Stream<List<ProductModel>> getAllProducts() =>
       firebaseFirestore.collection(collection).snapshots().map((event) =>
           event.docs.map((item) => ProductModel.fromMap(item.data())).toList());
+
+  Stream<List<ProductModel>> fillmapForTop10ForEachCafeteria() {
+    for (int i = 0; i < caffetriaController.cafeterias.length; i++) {
+      for (int j = 0; j < products.length; j++) {
+        if (caffetriaController.cafeterias[i].cafeteriaId ==
+            products[j].caffeteriaid) {
+          caffetriaController.cafeterias[i].splayTree.insert(products[j]);
+        }
+      }
+      if (caffetriaController.cafeterias[i].splayTree.size != 0) {
+        List<ProductModel> list =
+            caffetriaController.cafeterias[i].splayTree.topKFrequent(2);
+
+        mapForTop10ForEachCafeteria.putIfAbsent(
+            caffetriaController.cafeterias[i].cafeteriaId, () => list);
+        Top10meals = mapForTop10ForEachCafeteria[
+            caffetriaController.cafeterias[i].cafeteriaId];
+      }
+    }
+  }
+
+  Stream<List<ProductModel>> getProductsByTemprture() {
+    if (caffetriaController.tempOnCelsuis > 0 &&
+        caffetriaController.tempOnCelsuis <= 15) {
+      return firebaseFirestore
+          .collection(collection)
+          .where("tempStatus", isEqualTo: "cold")
+          .snapshots()
+          .map((event) =>
+              event.docs.map((e) => ProductModel.fromMap(e.data())).toList());
+    } else if (caffetriaController.tempOnCelsuis > 15 &&
+        caffetriaController.tempOnCelsuis <= 25) {
+      return firebaseFirestore
+          .collection(collection)
+          .where("tempStatus", isEqualTo: "between")
+          .snapshots()
+          .map((event) =>
+              event.docs.map((e) => ProductModel.fromMap(e.data())).toList());
+    } else {
+      return firebaseFirestore
+          .collection(collection)
+          .where("tempStatus", isEqualTo: "hot")
+          .snapshots()
+          .map((event) =>
+              event.docs.map((e) => ProductModel.fromMap(e.data())).toList());
+    }
+  }
 
   void addproduct(ProductModel product) async {
     if (isadded(product)) {

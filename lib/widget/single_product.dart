@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'package:gradutionfinalv/utils/splayTree.dart';
+
 import 'package:get/get.dart';
+
 import 'package:gradutionfinalv/widget/custom_text.dart';
 
 import '../constants/controllers.dart';
@@ -8,8 +12,10 @@ import '../model/product.dart';
 
 class SingleProductWidget extends StatelessWidget {
   final ProductModel product;
+  final SplayTree splayTree;
 
-  const SingleProductWidget({Key key, this.product}) : super(key: key);
+  const SingleProductWidget({Key key, this.product, this.splayTree})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,6 +81,19 @@ class SingleProductWidget extends StatelessWidget {
                   onPressed: () {
                     cartController.addProductTocart(product);
                     recommendationController.getRecomandedList(product);
+                    // productsController.splayTree.insert(product);
+                    //productsController.fillTree();
+                    caffetriaController
+                        .getCaffeteria(product.caffeteriaid)
+                        .splayTree
+                        .insert(product);
+                    List<ProductModel> listMeso = caffetriaController
+                        .getCaffeteria(product.caffeteriaid)
+                        .splayTree
+                        .topKFrequent(2);
+                    for (ProductModel s in listMeso) {
+                      print(s.ProductName);
+                    }
                   })
             ],
           ),

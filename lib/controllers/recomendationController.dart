@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/constants/firebase.dart';
@@ -12,7 +11,7 @@ class RecommendationController extends GetxController {
   static RecommendationController instace = Get.find();
   RxMap<ProductModel, List<ProductModel>> recomanderList =
       RxMap<ProductModel, List<ProductModel>>();
-  List<ProductModel> list = List();
+  List<ProductModel> list = <ProductModel>[];
 
   getissa() {
     List<List<double>> descriptionMatrix = [];
