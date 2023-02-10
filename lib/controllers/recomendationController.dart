@@ -32,7 +32,7 @@ class RecommendationController extends GetxController {
       Map<String, int> set = Map();
 
       for (var j = 0; j < productsController.products.length; j++) {
-        if (descriptionMatrix[i][j] >= 0.8 &&
+        if (descriptionMatrix[i][j] >= 0.5 &&
             !(set.containsKey(productsController.products[j].ProductName))) {
           data.add(productsController.products[j]);
           set[productsController.products[j].ProductName] = 1;

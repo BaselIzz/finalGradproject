@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
     recommendationController.getissa();
 
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           SizedBox(
             height: 20,

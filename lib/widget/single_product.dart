@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:gradutionfinalv/utils/splayTree.dart';
+
+import 'package:get/get.dart';
+
 import 'package:gradutionfinalv/widget/custom_text.dart';
 
 import '../constants/controllers.dart';
@@ -45,9 +49,16 @@ class SingleProductWidget extends StatelessWidget {
             weight: FontWeight.bold,
           ),
           CustomText(
-            text: '${product.ProductTime}',
-            color: Colors.grey,
+            text: 'Time To Done: ${product.ProductTime}s',
+            color: Colors.black,
           ),
+          SizedBox(
+            height: 5,
+          ),
+          Obx(() => CustomText(
+                text:
+                    " Product in order: ${orderController.productinoreder(product).toString()}",
+              )),
           SizedBox(
             height: 5,
           ),
