@@ -7,3 +7,6 @@ final Future<FirebaseApp> initialization = Firebase.initializeApp();
 final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseMessaging messaging = FirebaseMessaging.instance;
+String api =
+    "https://api.openweathermap.org/data/2.5/weather?q=Ramallah&mode=json&appid=99b40779b5288bb0b5c817abaf4356be";
+//99b40779b5288bb0b5c817abaf4356be
