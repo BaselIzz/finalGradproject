@@ -2,13 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/model/product.dart';
 import 'package:gradutionfinalv/values/values.dart';
 import 'package:gradutionfinalv/widget/SingleWidgetSearch.dart';
 import 'package:gradutionfinalv/widget/custom_text_from_field.dart';
-import 'package:gradutionfinalv/widget/single_product.dart';
 
 class SearchScreen extends StatelessWidget {
   final controller = Mycontroller();
@@ -26,7 +24,7 @@ class SearchScreen extends StatelessWidget {
           body: Column(
             children: [
               Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 child: CustomTextFormField(
                   onchange: (_) =>
                       controller.filterList(controller.textedit.text),
@@ -36,10 +34,10 @@ class SearchScreen extends StatelessWidget {
                   prefixIconColor: Colors.white,
                   autocorrect: true,
                   hasPrefixIcon: true,
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Expanded(
@@ -84,7 +82,8 @@ class Mycontroller extends GetxController {
   TextEditingController textedit = TextEditingController();
   filterList(String text) {
     filteredItems.value = productsController.products
-        .where((p0) => p0.ProductName.toLowerCase().contains(text))
+        .where(
+            (p0) => p0.ProductName.toLowerCase().contains(text.toLowerCase()))
         .toList();
   }
 }

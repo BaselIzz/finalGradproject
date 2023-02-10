@@ -52,7 +52,6 @@ class UserController extends GetxController {
 
   void signIn() async {
     try {
-      //  showLoading();
       await auth
           .signInWithEmailAndPassword(
               email: email.text.trim(), password: password.text.trim())
@@ -68,7 +67,6 @@ class UserController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
       Get.snackbar("Sign In Failed", "Try again");
-      //  dismissLoadingWidget();
     }
   }
 
@@ -207,39 +205,41 @@ class UserController extends GetxController {
         .get()
         .then((value) async {
       if (value.get("role") == "user") {
-        if (auth.currentUser.emailVerified != true) {
-          Get.snackbar("Your Account is not verfy ", "Go To Your Email");
-          auth.currentUser.sendEmailVerification();
-        }
         userModel.value = await firebaseFirestore
             .collection(usersCollection)
             .doc(userid)
             .get()
             .then((doc) => UserModel.fromSnapshot(doc));
         userModel.bindStream(listenToUser());
-        Get.offAll(() => MainScreen());
+        if (auth.currentUser.emailVerified != true) {
+          Get.snackbar("Your Account is not verfy ", "Go To Your Email");
+
+          auth.currentUser.sendEmailVerification();
+          Get.offAll(() => const Verifed());
+        } else {
+          Get.offAll(() => MainScreen());
+        }
       } else if (value.get("role") == "admin") {
         adminmodel.value = await firebaseFirestore
             .collection(usersCollection)
             .doc(userid)
             .get()
             .then((doc) => AdminModel.fromSnapshot(doc));
-        Get.offAll(AdminScreen());
+        Get.offAll(() => const AdminScreen());
       } else if (value.get("role") == "manger") {
         mangerModel.value = await firebaseFirestore
             .collection(usersCollection)
             .doc(userid)
             .get()
             .then((value) => MangerModel.fromSnapshot(value));
-        Get.offAll(MangerScreen());
-        // }
+        Get.offAll(() => const MangerScreen());
       } else {
         vendormodel.value = await firebaseFirestore
             .collection(usersCollection)
             .doc(userid)
             .get()
             .then((value) => VendorModel.fromSnapshot(value));
-        Get.offAll(VendorScreen());
+        Get.offAll(() => const VendorScreen());
       }
     });
   }
