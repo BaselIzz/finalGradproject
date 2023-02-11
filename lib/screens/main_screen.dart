@@ -53,6 +53,11 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     recommendationController.getissa();
     productsController.getmeso();
+    productsController.fillmapForTop10ForEachCafeteria();
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    print(productsController.mapForTop10ForEachCafeteria.length);
+    caffetriaController.getTemprture();
+
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
 

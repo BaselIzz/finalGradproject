@@ -13,8 +13,10 @@ import 'caffeteria_screen.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    recommendationController.getissa();
+
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           SizedBox(
             height: 20,

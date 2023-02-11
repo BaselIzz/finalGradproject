@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gradutionfinalv/model/product.dart';
+import 'package:gradutionfinalv/utils/splayTree.dart';
 
 class CafeteriaModel {
   static const HASUSER = "hasuser";
@@ -15,6 +17,7 @@ class CafeteriaModel {
   bool hasuser;
   String email;
   String Caf_img;
+  SplayTree<ProductModel> splayTree = SplayTree();
 
   CafeteriaModel(
       {this.cafeteriaId,

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/constants/firebase.dart';
@@ -13,6 +12,7 @@ class RecommendationController extends GetxController {
   RxMap<ProductModel, List<ProductModel>> recomanderList =
       RxMap<ProductModel, List<ProductModel>>();
   List<ProductModel> list = <ProductModel>[];
+
   getissa() {
     List<List<double>> descriptionMatrix = [];
     RxMap<ProductModel, List<ProductModel>> Reclist =
@@ -31,7 +31,7 @@ class RecommendationController extends GetxController {
       List<ProductModel> data = <ProductModel>[];
       Map<String, int> set = Map();
       for (var j = 0; j < productsController.products.length; j++) {
-        if (descriptionMatrix[i][j] >= 0.8 &&
+        if (descriptionMatrix[i][j] >= 0.5 &&
             !(set.containsKey(productsController.products[j].ProductName))) {
           data.add(productsController.products[j]);
           set[productsController.products[j].ProductName] = 1;
