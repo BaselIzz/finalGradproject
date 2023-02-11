@@ -1,17 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:gradutionfinalv/constants/controllers.dart';
-import 'package:gradutionfinalv/constants/firebase.dart';
 import 'package:gradutionfinalv/model/cafeteria.dart';
-import 'package:gradutionfinalv/widget/caffeteriashow.dart';
 import 'package:gradutionfinalv/widget/custom_text.dart';
 
 class SingleCaffeteriaitem extends StatelessWidget {
+  // ignore: non_constant_identifier_names
   final CafeteriaModel Caffeteia;
+  // ignore: non_constant_identifier_names
   const SingleCaffeteriaitem({Key key, this.Caffeteia}) : super(key: key);
 
   @override
@@ -23,7 +17,7 @@ class SingleCaffeteriaitem extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                   color: Colors.grey.withOpacity(.5),
-                  offset: Offset(3, 2),
+                  offset: const Offset(3, 2),
                   blurRadius: 7)
             ]),
         child: Column(
@@ -50,10 +44,10 @@ class SingleCaffeteriaitem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                IconButton(icon: Icon(Icons.remove), onPressed: () {})
+                IconButton(icon: const Icon(Icons.remove), onPressed: () {})
               ],
             ),
           ],

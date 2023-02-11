@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:gradutionfinalv/model/cafeteria.dart';
 
@@ -15,6 +16,7 @@ class ProductsController extends GetxController {
   static ProductsController instace = Get.find();
 
   RxList<ProductModel> products = RxList<ProductModel>([]);
+
   //SplayTree<ProductModel> splayTree = SplayTree<ProductModel>();
   List<ProductModel> Top10meals = RxList<ProductModel>([]);
   HashMap<String, List<ProductModel>> mapForTop10ForEachCafeteria = HashMap();
@@ -24,7 +26,7 @@ class ProductsController extends GetxController {
 
   String collection = "product";
   @override
-  void onReady() {
+  void onReady() async {
     // TODO: implement onReady
     super.onReady();
     products.bindStream(getAllProducts());
@@ -36,6 +38,7 @@ class ProductsController extends GetxController {
       firebaseFirestore.collection(collection).snapshots().map((event) =>
           event.docs.map((item) => ProductModel.fromMap(item.data())).toList());
 
+  // ignore: missing_return
   Stream<List<ProductModel>> fillmapForTop10ForEachCafeteria() {
     for (int i = 0; i < caffetriaController.cafeterias.length; i++) {
       for (int j = 0; j < products.length; j++) {
@@ -93,7 +96,6 @@ class ProductsController extends GetxController {
     final addprd = firebaseFirestore.collection(collection).doc();
     final json = {
       "cafetria_id": product.caffeteriaid,
-      // "categoryid": product.categoryId,
       "id": addprd.id,
       "product_photo": product.ProductPhoto,
       "product_name": product.ProductName,

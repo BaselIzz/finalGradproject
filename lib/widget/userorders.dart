@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/model/order.dart';
 import 'package:gradutionfinalv/model/order_item.dart';
@@ -16,7 +12,7 @@ class UserOrders extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(
             border: Border.all(
                 color: order.status == "Done" ? Colors.green : Colors.red)),
@@ -30,7 +26,7 @@ class UserOrders extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CustomText(text: "Status:"),
+              const CustomText(text: "Status:"),
               Icon(order.status == "Done" ? Icons.done : Icons.clear,
                   color: order.status == "Done" ? Colors.green : Colors.red)
             ],
@@ -41,7 +37,7 @@ class UserOrders extends StatelessWidget {
             },
             color: order.status == "Done" ? Colors.green : Colors.red,
             minWidth: 100,
-            child: Text(
+            child: const Text(
               "Re Order",
               style: TextStyle(color: Colors.white),
             ),

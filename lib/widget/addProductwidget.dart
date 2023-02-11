@@ -59,8 +59,8 @@ class _AddProductWidgetState extends State<AddProductWidget> {
           right: 0,
           bottom: 36,
           child: Container(
-              margin: EdgeInsets.all(20),
-              padding: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Form(
                 key: formkey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -100,7 +100,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                         ),
                       ),
                     ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomButton(
@@ -138,7 +138,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                       fillColor: Colors.black,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   const Center(
@@ -152,7 +152,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                   Container(
                     margin: const EdgeInsets.all(20),
                     child: CustomTextFormField(
-                      keybordtype: TextInputType.numberWithOptions(
+                      keybordtype: const TextInputType.numberWithOptions(
                           signed: false, decimal: false),
                       icon: const Icon(Icons.table_chart),
                       hasPrefixIcon: true,
@@ -189,7 +189,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                     child: CustomTextFormField(
                       icon: const Icon(Icons.table_chart),
                       hasPrefixIcon: true,
-                      keybordtype: TextInputType.numberWithOptions(
+                      keybordtype: const TextInputType.numberWithOptions(
                           signed: false, decimal: true),
                       validator: (p0) {
                         const regx = r"/^\d+$/";

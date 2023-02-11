@@ -14,15 +14,14 @@ class CaffeteriaItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
-          margin: EdgeInsets.all(20),
-          padding: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: ListView(
               scrollDirection: Axis.vertical,
               children: caffetriaController.cafeterias
                   .map((CafeteriaModel caffeteria) {
                 return FoodyBiteCard(
                   caffeteria: caffeteria,
-                  //==cardTitle: "pizza",
                   imagePath: caffeteria.Caf_img,
                   imageHeight: 100,
                   cardHeight: 170,
