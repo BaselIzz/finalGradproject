@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +13,7 @@ import '../utils/splayTree.dart';
 
 class ProductsController extends GetxController {
   static ProductsController instace = Get.find();
+
   RxList<ProductModel> products = RxList<ProductModel>([]);
   //SplayTree<ProductModel> splayTree = SplayTree<ProductModel>();
   List<ProductModel> Top10meals = RxList<ProductModel>([]);
@@ -177,5 +179,7 @@ class ProductsController extends GetxController {
   //     .snapshots()
   //     .map((event) =>
   //         event.docs.map((e) => ProductModel.fromMap(e.data())).toList());
+
+  //// here the code for the diply the product and manipluate  of the ingrdeints of its like incresae and decresae specifc ingreadints
 
 }
