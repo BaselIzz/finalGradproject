@@ -23,8 +23,10 @@ class CartController extends GetxController {
     try {
       if (userController.userModel.value.cart.isNotEmpty &&
           !_fromnotsameCaffeteria(product)) {
-        Get.snackbar("You cant add from other caffeteria",
-            "the caffeteria is not the same ");
+        Get.snackbar(
+          "You cant add from other caffeteria",
+          "the caffeteria is not the same ",
+        );
       } else if (_isItemAlreadyAdded(product)) {
         Get.snackbar(
             "Check your cat", "${product.ProductName} is already Added");

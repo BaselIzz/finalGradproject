@@ -1,5 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gradutionfinalv/constants/firebase.dart';
+import 'package:gradutionfinalv/model/cafeteria.dart';
 
 import 'package:gradutionfinalv/utils/splayTree.dart';
 
@@ -79,6 +80,8 @@ class SingleProductWidget extends StatelessWidget {
               IconButton(
                   icon: Icon(Icons.add_shopping_cart),
                   onPressed: () {
+                    productsController.fillmapForTop10ForEachCafeteria();
+
                     cartController.addProductTocart(product);
                     recommendationController.getRecomandedList(product);
                     // productsController.splayTree.insert(product);
@@ -87,13 +90,14 @@ class SingleProductWidget extends StatelessWidget {
                         .getCaffeteria(product.caffeteriaid)
                         .splayTree
                         .insert(product);
-                    List<ProductModel> listMeso = caffetriaController
-                        .getCaffeteria(product.caffeteriaid)
-                        .splayTree
-                        .topKFrequent(2);
-                    for (ProductModel s in listMeso) {
-                      print(s.ProductName);
-                    }
+                    // List<ProductModel> listMeso = caffetriaController
+                    //     .getCaffeteria(product.caffeteriaid)
+                    //     .splayTree
+                    //     .topKFrequent(2);
+                    // for (ProductModel s in listMeso) {
+                    //   print(s.ProductName);
+                    // }
+                    Addtofirebasefromtree(product);
                   })
             ],
           ),
@@ -101,15 +105,17 @@ class SingleProductWidget extends StatelessWidget {
       ),
     );
   }
+
+  void Addtofirebasefromtree(ProductModel product) {
+    List<ProductModel> prod;
+    prod = caffetriaController
+        .getCaffeteria(product.caffeteriaid)
+        .splayTree
+        .topKFrequent(3);
+
+    firebaseFirestore
+        .collection("TreeSplayList")
+        .doc(product.caffeteriaid)
+        .set({"List": prod.map((e) => e.toJson()).toList()});
+  }
 }
-
-
-
-/* 
-  Firestore.instance
-.collection('users').document('xsajAansjdna')
-.get()
-.then((value) =>
-print("Fetched ==>>>"+value.data["username"]));
-  
-  */

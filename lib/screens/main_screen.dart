@@ -2,6 +2,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/controllers/product_controller.dart';
+import 'package:gradutionfinalv/main.dart';
+import 'package:gradutionfinalv/model/product.dart';
 import 'package:gradutionfinalv/screens/search_screen.dart';
 
 import '../constants/controllers.dart';
@@ -54,6 +56,8 @@ class _MainScreenState extends State<MainScreen> {
     recommendationController.getissa();
     productsController.getmeso();
     productsController.fillmapForTop10ForEachCafeteria();
+    caffetriaController.prodFormSplayTree
+        .bindStream(caffetriaController.getProductFormsplayTree());
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     print(productsController.mapForTop10ForEachCafeteria.length);
     caffetriaController.getTemprture();

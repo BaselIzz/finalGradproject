@@ -13,7 +13,7 @@ class OrderController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    orders.bindStream(getAllorders());
+    orders.bindStream(getOrdertByTime());
   }
 
   Stream<List<orderModel>> getAllorders() =>
@@ -65,7 +65,7 @@ class OrderController extends GetxController {
 
   Stream<List<orderModel>> getOrdertByTime() => firebaseFirestore
       .collection(collection)
-      .orderBy('time', descending: true)
+      .orderBy('time', descending: false)
       .snapshots()
       .map((event) =>
           event.docs.map((item) => orderModel.fromMap(item.data())).toList());
