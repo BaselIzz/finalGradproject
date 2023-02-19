@@ -9,7 +9,9 @@ import 'package:get/get.dart';
 import 'package:gradutionfinalv/widget/custom_text.dart';
 
 import '../constants/controllers.dart';
+import '../controllers/MealDetailController.dart';
 import '../model/product.dart';
+import '../screens/mealDetailScreen.dart';
 
 class SingleProductWidget extends StatelessWidget {
   final ProductModel product;
@@ -50,7 +52,9 @@ class SingleProductWidget extends StatelessWidget {
             weight: FontWeight.bold,
           ),
           CustomText(
-            text: 'Time To Done: ${product.ProductTime}s',
+            text: orderController.productinoreder(product) > 0
+                ? 'Time To Done: ${int.parse(product.ProductTime) * orderController.productinoreder(product)}m'
+                : 'Time To Done: ${product.ProductTime} m',
             color: Colors.black,
           ),
           SizedBox(
@@ -82,7 +86,7 @@ class SingleProductWidget extends StatelessWidget {
                   onPressed: () {
                     productsController.fillmapForTop10ForEachCafeteria();
 
-                    cartController.addProductTocart(product);
+                    //cartController.addProductTocart(product);
                     recommendationController.getRecomandedList(product);
                     // productsController.splayTree.insert(product);
                     //productsController.fillTree();
@@ -97,6 +101,10 @@ class SingleProductWidget extends StatelessWidget {
                     // for (ProductModel s in listMeso) {
                     //   print(s.ProductName);
                     // }
+
+                    Get.lazyPut(
+                        () => MealDetailController(productModel: product));
+                    Get.to(() => MealDetailScreen());
                     Addtofirebasefromtree(product);
                   })
             ],

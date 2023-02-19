@@ -109,6 +109,7 @@ class UserController extends GetxController {
               email: email.text.trim(), password: password.text.trim())
           .then((result) {
         String _userId = result.user.uid;
+        FirebaseMessaging.instance.subscribeToTopic('birzeit');
         _addUserToFirestore(_userId);
         _clearControllers();
 

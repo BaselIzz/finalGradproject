@@ -19,7 +19,7 @@ class CartController extends GetxController {
     ever(userController.userModel, ChangeCartTotalPrice);
   }
 
-  void addProductTocart(ProductModel product) {
+  void addProductTocart(ProductModel product, String notice) {
     try {
       if (userController.userModel.value.cart.isNotEmpty &&
           !_fromnotsameCaffeteria(product)) {
@@ -42,7 +42,8 @@ class CartController extends GetxController {
               "price": product.ProductPrice,
               "image": product.ProductPhoto,
               "cost": product.ProductPrice,
-              "cafetriaId": product.caffeteriaid
+              "cafetriaId": product.caffeteriaid,
+              "notice": notice
             }
           ])
         });
@@ -106,31 +107,57 @@ class CartController extends GetxController {
       .where((item) => item.cafeteriaId.compareTo(product.caffeteriaid) == 0)
       .isNotEmpty;
 
-  void makeOrder() async {
-    CartItemModel cart = userController.userModel.value.cart.first;
-    if (userController.userModel.value.cart.isNotEmpty) {
-      final doc = FirebaseFirestore.instance.collection("orders").doc();
-      final jason = {
-        "payment": false,
-        "served": false,
-        "cafeteriaid": cart.cafeteriaId.toString(),
-        "order": userController.userModel.value.cart
-            .map((e) => e.toJsonOreder())
-            .toList(),
-        "orderid": doc.id,
-        "createdby": userController.userModel.value.name,
-        "time": DateTime.now().toString(),
-        "status": "notDone",
-        "useremail": userController.userModel.value.email,
-        "totalprice": cartController.totalCartPrice.toString(),
-        "userid": userController.userModel.value.id,
-      };
-      await doc.set(jason);
-      clearcart();
-    } else {
-      Get.snackbar("The cart is empty", "you cant order an empty cart");
-    }
-  }
+  // void makeOrder() async {
+  //   CartItemModel cart = userController.userModel.value.cart.first;
+  //   if (userController.userModel.value.cart.isNotEmpty) {
+  //     final doc = FirebaseFirestore.instance.collection("orders").doc();
+  //     final jason = {
+  //       "payment": false,
+  //       "served": false,
+  //       "cafeteriaid": cart.cafeteriaId.toString(),
+  //       "order": userController.userModel.value.cart
+  //           .map((e) => e.toJsonOreder())
+  //           .toList(),
+  //       "orderid": doc.id,
+  //       "createdby": userController.userModel.value.name,
+  //       "time": DateTime.now().toString(),
+  //       "status": "notDone",
+  //       "useremail": userController.userModel.value.email,
+  //       "totalprice": cartController.totalCartPrice.toString(),
+  //       "userid": userController.userModel.value.id,
+  //     };
+  //     await doc.set(jason);
+  //     clearcart();
+  //   } else {
+  //     Get.snackbar("The cart is empty", "you cant order an empty cart");
+  //   }
+  // }
+
+  // void makePayOrder() async {
+  //   CartItemModel cart = userController.userModel.value.cart.first;
+  //   if (userController.userModel.value.cart.isNotEmpty) {
+  //     final doc = FirebaseFirestore.instance.collection("orders").doc();
+  //     final jason = {
+  //       "payment": true,
+  //       "served": false,
+  //       "cafeteriaid": cart.cafeteriaId.toString(),
+  //       "order": userController.userModel.value.cart
+  //           .map((e) => e.toJsonOreder())
+  //           .toList(),
+  //       "orderid": doc.id,
+  //       "createdby": userController.userModel.value.name,
+  //       "time": DateTime.now().toString(),
+  //       "status": "notDone",
+  //       "useremail": userController.userModel.value.email,
+  //       "totalprice": cartController.totalCartPrice.toString(),
+  //       "userid": userController.userModel.value.id,
+  //     };
+  //     await doc.set(jason);
+  //     clearcart();
+  //   } else {
+  //     Get.snackbar("The cart is empty", "you cant order an empty cart");
+  //   }
+  // }
 
   void makePayOrder() async {
     CartItemModel cart = userController.userModel.value.cart.first;
@@ -150,11 +177,68 @@ class CartController extends GetxController {
         "useremail": userController.userModel.value.email,
         "totalprice": cartController.totalCartPrice.toString(),
         "userid": userController.userModel.value.id,
+        "reciveId": 0, // initialize reciveId to 0
       };
+
+      // Increment the value of reciveId
+      QuerySnapshot orders = await FirebaseFirestore.instance
+          .collection("orders")
+          .orderBy("reciveId", descending: true)
+          .limit(1)
+          .get();
+      if (orders.docs.isNotEmpty) {
+        Map<String, dynamic> data =
+            orders.docs.first.data() as Map<String, dynamic>;
+        int maxReciveId = data["reciveId"] as int;
+        jason["reciveId"] = maxReciveId + 1;
+      } else {
+        jason["reciveId"] = 1;
+      }
+
+      // Save the order to Firestore
       await doc.set(jason);
       clearcart();
-    } else {
-      Get.snackbar("The cart is empty", "you cant order an empty cart");
+    }
+  }
+
+  void makeOrder() async {
+    CartItemModel cart = userController.userModel.value.cart.first;
+    if (userController.userModel.value.cart.isNotEmpty) {
+      final doc = FirebaseFirestore.instance.collection("orders").doc();
+      final jason = {
+        "payment": false,
+        "served": false,
+        "cafeteriaid": cart.cafeteriaId.toString(),
+        "order": userController.userModel.value.cart
+            .map((e) => e.toJsonOreder())
+            .toList(),
+        "orderid": doc.id,
+        "createdby": userController.userModel.value.name,
+        "time": DateTime.now().toString(),
+        "status": "notDone",
+        "useremail": userController.userModel.value.email,
+        "totalprice": cartController.totalCartPrice.toString(),
+        "userid": userController.userModel.value.id,
+        "reciveId": 0, // initialize reciveId to 0
+      };
+
+      // Increment the value of reciveId
+      QuerySnapshot orders = await FirebaseFirestore.instance
+          .collection("orders")
+          .orderBy("reciveId", descending: true)
+          .limit(1)
+          .get();
+      if (orders.docs.isNotEmpty) {
+        Map<String, dynamic> data =
+            orders.docs.first.data() as Map<String, dynamic>;
+        int maxReciveId = data["reciveId"] as int;
+        jason["reciveId"] = maxReciveId + 1;
+      } else {
+        jason["reciveId"] = 1;
+      }
+
+      await doc.set(jason);
+      clearcart();
     }
   }
 

@@ -43,7 +43,9 @@ class SingleProductSearch extends StatelessWidget {
             weight: FontWeight.bold,
           ),
           CustomText(
-            text: 'Time To Done: ${product.ProductTime}s',
+            text: orderController.productinoreder(product) > 0
+                ? 'Time To Done: ${int.parse(product.ProductTime) * orderController.productinoreder(product)}m'
+                : 'Time To Done: ${product.ProductTime} m',
             color: Colors.black,
           ),
           const SizedBox(

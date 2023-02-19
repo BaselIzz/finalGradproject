@@ -120,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: userController.password,
       //onSaved: (newValue) => setState(() => password = newValue),
       validator: (newvalue) {
-        if (newvalue.length < 7) {
+        if (newvalue.length < 6) {
           return "Password must be at least 7 characters long";
         }
         return null;

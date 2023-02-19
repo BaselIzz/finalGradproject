@@ -7,6 +7,7 @@ class CartItemModel {
   static const PRICE = "price";
   static const PRODUCT_ID = "productId";
   static const Caffeteria_ID = "cafetriaId";
+  static const NOTICE = "notice";
 
   String id;
   String image;
@@ -16,6 +17,7 @@ class CartItemModel {
   String productId;
   double price;
   String cafeteriaId;
+  String notice;
 
   CartItemModel(
       {this.productId,
@@ -24,7 +26,8 @@ class CartItemModel {
       this.name,
       this.quantity,
       this.cost,
-      this.cafeteriaId});
+      this.cafeteriaId,
+      this.notice});
 
   CartItemModel.fromMap(Map<String, dynamic> data) {
     id = data[ID];
@@ -35,6 +38,7 @@ class CartItemModel {
     productId = data[PRODUCT_ID];
     price = (double.parse(data[PRICE])).toDouble();
     cafeteriaId = data[Caffeteria_ID];
+    notice = data[NOTICE];
   }
 
   Map toJson() => {
@@ -46,6 +50,7 @@ class CartItemModel {
         COST: ((price * quantity)).toString(),
         PRICE: (price).toString(),
         Caffeteria_ID: cafeteriaId,
+        NOTICE: notice
       };
   Map toJsonOreder() => {
         ID: id,
@@ -54,5 +59,6 @@ class CartItemModel {
         NAME: name,
         QUANTITY: quantity,
         COST: ((price * quantity)).toString(),
+        NOTICE: notice
       };
 }
