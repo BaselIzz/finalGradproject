@@ -59,6 +59,7 @@ class UserController extends GetxController {
         useremail = email.text;
         userpassword = password.text;
         String _userId = result.user.uid;
+        getToken(_userId);
 
         insitializeusermodel(_userId);
         _clearControllers();
@@ -94,7 +95,7 @@ class UserController extends GetxController {
 
   void getToken(String userid) async {
     await FirebaseMessaging.instance.getToken().then((token) {
-      firebaseFirestore.collection("UserTokens").doc(userid).update({
+      firebaseFirestore.collection("UserTokens").doc(userid).set({
         'token': token,
       });
       logger.i({"$token": "GetToken"});
@@ -112,6 +113,7 @@ class UserController extends GetxController {
         FirebaseMessaging.instance.subscribeToTopic('birzeit');
         _addUserToFirestore(_userId);
         _clearControllers();
+        getToken(_userId);
 
         auth.currentUser.sendEmailVerification();
       });

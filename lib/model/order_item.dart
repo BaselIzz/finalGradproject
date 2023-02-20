@@ -7,6 +7,7 @@ class OrderItemModel {
   static const QUANTITY = "quantity";
   static const COST = "cost";
   static const PRODUCT_ID = "productId";
+  static const NOTICE = "notice";
 
   String id;
   String image;
@@ -14,13 +15,15 @@ class OrderItemModel {
   String quantity;
   String cost;
   String productId;
+  String notice;
   OrderItemModel(
       {this.id,
       this.image,
       this.cost,
       this.name,
       this.productId,
-      this.quantity});
+      this.quantity,
+      this.notice});
   OrderItemModel.fromMap(Map<String, dynamic> data) {
     id = data[ID];
     image = data[IMAGE];
@@ -28,6 +31,7 @@ class OrderItemModel {
     quantity = data[QUANTITY].toString();
     cost = data[COST];
     productId = data[PRODUCT_ID];
+    notice = data[NOTICE];
   }
   Map Tojason() => {
         ID: id,
@@ -36,5 +40,6 @@ class OrderItemModel {
         NAME: name,
         QUANTITY: quantity,
         COST: ((cost * int.parse(quantity))).toString(),
+        NOTICE: notice
       };
 }
