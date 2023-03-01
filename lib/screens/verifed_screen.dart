@@ -4,18 +4,9 @@ import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
 import 'package:gradutionfinalv/constants/firebase.dart';
 
-import '../widget/dark_overlay.dart';
-import 'verifed_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'register_screen.dart';
+
 import 'main_screen.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../values/values.dart';
-import '../widget/custom_page_route.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Verifed extends StatefulWidget {
   const Verifed({
@@ -35,7 +26,7 @@ class _VerifedState extends State<Verifed> {
     if (!isEmailverifyed) {
       auth.currentUser.sendEmailVerification();
       timer =
-          Timer.periodic(Duration(seconds: 30), (_) => checkEmailVerifyed());
+          Timer.periodic(Duration(seconds: 20), (_) => checkEmailVerifyed());
       super.initState();
     }
   }

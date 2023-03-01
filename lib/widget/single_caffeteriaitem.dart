@@ -43,11 +43,11 @@ class SingleCaffeteriaitem extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(
+              children: const [
+                SizedBox(
                   width: 10,
                 ),
-                IconButton(icon: const Icon(Icons.remove), onPressed: () {})
+                //if you want to add any button  on left and if you want you can add to button by remove above
               ],
             ),
           ],

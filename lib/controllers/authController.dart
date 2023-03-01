@@ -249,7 +249,8 @@ class UserController extends GetxController {
 
   void forgetpassword() {
     try {
-      auth.sendPasswordResetEmail(email: email.text);
+      auth.sendPasswordResetEmail(email: email.text.trim());
+      Get.snackbar("The Message Have Been Sent", "Go to your Email");
     } catch (e) {
       debugPrint(e.toString());
       Get.snackbar("There is a proplem", "Can send forget password");

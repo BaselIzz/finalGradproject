@@ -69,7 +69,7 @@ class SingleProductSearch extends StatelessWidget {
                   weight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               IconButton(

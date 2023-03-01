@@ -78,35 +78,31 @@ class SingleProductWidget extends StatelessWidget {
                   weight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
-              IconButton(
-                  icon: Icon(Icons.add_shopping_cart),
-                  onPressed: () {
-                    productsController.fillmapForTop10ForEachCafeteria();
+              Visibility(
+                visible: product.is_Exist,
+                child: IconButton(
+                    icon: const Icon(
+                      Icons.add_shopping_cart,
+                    ),
+                    onPressed: () {
+                      productsController.fillmapForTop10ForEachCafeteria();
 
-                    //cartController.addProductTocart(product);
-                    recommendationController.getRecomandedList(product);
-                    // productsController.splayTree.insert(product);
-                    //productsController.fillTree();
-                    caffetriaController
-                        .getCaffeteria(product.caffeteriaid)
-                        .splayTree
-                        .insert(product);
-                    // List<ProductModel> listMeso = caffetriaController
-                    //     .getCaffeteria(product.caffeteriaid)
-                    //     .splayTree
-                    //     .topKFrequent(2);
-                    // for (ProductModel s in listMeso) {
-                    //   print(s.ProductName);
-                    // }
+                      recommendationController.getRecomandedList(product);
 
-                    Get.lazyPut(
-                        () => MealDetailController(productModel: product));
-                    Get.to(() => MealDetailScreen());
-                    Addtofirebasefromtree(product);
-                  })
+                      caffetriaController
+                          .getCaffeteria(product.caffeteriaid)
+                          .splayTree
+                          .insert(product);
+
+                      Get.lazyPut(
+                          () => MealDetailController(productModel: product));
+                      Get.to(() => MealDetailScreen());
+                      Addtofirebasefromtree(product);
+                    }),
+              )
             ],
           ),
         ],
