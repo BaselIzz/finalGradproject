@@ -59,9 +59,9 @@ class UserController extends GetxController {
         useremail = email.text;
         userpassword = password.text;
         String _userId = result.user.uid;
+        getToken(_userId);
 
         insitializeusermodel(_userId);
-        getToken(_userId);
         _clearControllers();
       });
     } catch (e) {
@@ -83,6 +83,7 @@ class UserController extends GetxController {
 
         insitializeusermodel(_userId);
         getToken(_userId);
+
         _clearControllers();
       });
     } catch (e) {
@@ -109,8 +110,10 @@ class UserController extends GetxController {
               email: email.text.trim(), password: password.text.trim())
           .then((result) {
         String _userId = result.user.uid;
+        FirebaseMessaging.instance.subscribeToTopic('birzeit');
         _addUserToFirestore(_userId);
         _clearControllers();
+        getToken(_userId);
 
         auth.currentUser.sendEmailVerification();
       });
@@ -246,7 +249,8 @@ class UserController extends GetxController {
 
   void forgetpassword() {
     try {
-      auth.sendPasswordResetEmail(email: email.text);
+      auth.sendPasswordResetEmail(email: email.text.trim());
+      Get.snackbar("The Message Have Been Sent", "Go to your Email");
     } catch (e) {
       debugPrint(e.toString());
       Get.snackbar("There is a proplem", "Can send forget password");

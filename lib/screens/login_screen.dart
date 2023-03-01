@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/controllers/authController.dart';
+import 'package:gradutionfinalv/screens/forgetpasswordScreen.dart';
 import '../constants/controllers.dart';
 import '../widget/custom_text_from_field.dart';
 import '../widget/dark_overlay.dart';
@@ -120,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: userController.password,
       //onSaved: (newValue) => setState(() => password = newValue),
       validator: (newvalue) {
-        if (newvalue.length < 7) {
+        if (newvalue.length < 6) {
           return "Password must be at least 7 characters long";
         }
         return null;
@@ -177,7 +178,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Align(
       alignment: Alignment.topRight,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Get.to(ForgotPasswordScreen());
+        },
         child: Container(
           margin: EdgeInsets.only(top: Sizes.MARGIN_16),
           child: Text(
@@ -195,22 +198,10 @@ class _LoginScreenState extends State<LoginScreen> {
       children: <Widget>[
         InkWell(
           onTap: (() {
-            // Navigator.of(context)
-            //     .push(MaterialPageRoute(builder: (context) => MainScreen()));
-
             final isValid = formKey.currentState.validate();
             if (isValid == true) {
               formKey.currentState.save();
               userController.signIn();
-              //   final message = '\nPassword: $password\nEmail: $Email';
-              //   final snackBar = SnackBar(
-              //     content: Text(
-              //       message,
-              //       style: const TextStyle(fontSize: 20),
-              //     ),
-              //     backgroundColor: Colors.green,
-              //   );
-              //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           }),
           child: Container(

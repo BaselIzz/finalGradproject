@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/screens/products.screen.dart';
@@ -20,7 +19,7 @@ class SingleProductSearch extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(.5),
-                offset: Offset(3, 2),
+                offset: const Offset(3, 2),
                 blurRadius: 7)
           ]),
       child: Column(
@@ -44,10 +43,12 @@ class SingleProductSearch extends StatelessWidget {
             weight: FontWeight.bold,
           ),
           CustomText(
-            text: 'Time To Done: ${product.ProductTime}s',
+            text: orderController.productinoreder(product) > 0
+                ? 'Time To Done: ${int.parse(product.ProductTime) * orderController.productinoreder(product)}m'
+                : 'Time To Done: ${product.ProductTime} m',
             color: Colors.black,
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Obx(() => CustomText(
@@ -68,7 +69,7 @@ class SingleProductSearch extends StatelessWidget {
                   weight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               IconButton(

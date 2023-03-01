@@ -20,7 +20,7 @@ class CafeteriaScreenForRecomandedMeal extends StatelessWidget {
             centerTitle: true,
             backgroundColor: Colors.black,
             title: Text(
-              "Cafeteriaes For ${name}",
+              "Cafeteriaes For $name",
               style: const TextStyle(fontSize: 13),
             )),
         body: Container(

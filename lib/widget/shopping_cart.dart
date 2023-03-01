@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/widget/cart_item_widget.dart';
@@ -15,17 +13,17 @@ class ShoppingCartWidget extends StatelessWidget {
       children: [
         ListView(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Center(
+            const Center(
               child: CustomText(
                 text: "Meal Order",
                 size: 24,
                 weight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Obx(() =>
@@ -64,19 +62,19 @@ class ShoppingCartWidget extends StatelessWidget {
                               builder: ((context) => Container(
                                     padding: EdgeInsets.all(40),
                                     child: Column(children: [
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 40,
                                       ),
-                                      CustomText(
+                                      const CustomText(
                                         text: "Payment",
                                         size: 20,
                                         weight: FontWeight.w600,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 40,
                                       ),
                                       MaterialButton(
-                                        shape: RoundedRectangleBorder(
+                                        shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15))),
                                         child: Row(
@@ -103,7 +101,7 @@ class ShoppingCartWidget extends StatelessWidget {
                                         },
                                         color: Colors.black,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                       MaterialButton(
@@ -136,7 +134,6 @@ class ShoppingCartWidget extends StatelessWidget {
                                       ),
                                     ]),
                                   )));
-
                         }
                       }),
                 )))

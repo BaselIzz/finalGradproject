@@ -43,12 +43,23 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
         color: Colors.green,
         width: 2.0,
       )),
-      margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+      padding: const EdgeInsets.all(10),
       child: Column(children: [
-        Text(" CreatedBy: ${widget.order.createdby} ",
-            style: TextStyle(fontSize: 20)),
-        SizedBox(
+        CustomText(
+          text: " Order Number  ${widget.order.recivedId} ",
+          weight: FontWeight.w900,
+          size: 20,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        CustomText(
+          text: "CreatedBy: ${widget.order.createdby}",
+          weight: FontWeight.w700,
+          size: 17,
+        ),
+        const SizedBox(
           height: 20,
         ),
         Column(
@@ -58,35 +69,44 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
                   label: Text(
                 "time",
                 style: TextStyle(fontSize: 20),
-                //  overflow: TextOverflow.fade,
               )),
               DataColumn(
                   label: Text(
                 "price",
                 style: TextStyle(fontSize: 20),
-                //  overflow: TextOverflow.visible,
               )),
             ], rows: [
               DataRow(cells: [
                 DataCell(Text(
                   "${widget.order.time}",
-                  style: TextStyle(fontSize: 15),
+                  style: const TextStyle(fontSize: 15),
                 )),
                 DataCell(Text("${widget.order.totalprice}"))
               ])
             ]),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
+        ),
+        CustomText(
+          text: "Addition = ${widget.order.order.first.notice}",
+          weight: FontWeight.w900,
+          size: 20,
+        ),
+        const SizedBox(
+          height: 20,
         ),
         DataTable(
             dividerThickness: 1,
-            columnSpacing: 40,
+            columnSpacing:
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? 10
+                    : 80,
             horizontalMargin: 10,
             border: TableBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30))),
-            columns: [
+            columns: const [
               DataColumn(
                   label: Text(
                 "Name ",
@@ -102,34 +122,38 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
               return DataRow(cells: [
                 DataCell(Text(
                   orderr.name.toString(),
-                  style: TextStyle(fontSize: 27),
+                  style: const TextStyle(fontSize: 20),
                 )),
                 DataCell(Image.network(
                   orderr.image,
-                  height: 60,
+                  height: 50,
+                  width: 50,
                 )),
                 DataCell(Text(
                   orderr.quantity,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 )),
                 DataCell(Text(
                   orderr.cost,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ))
               ]);
             })),
-        SizedBox(
+        const SizedBox(
           height: 40,
         ),
         ElevatedButton(
             onPressed: () {
               orderController.updateState(widget.order.orderid);
               getDeviceToken(widget.order.userid);
-              sendPushMessage(deviceToken, "Hello", "your order done ");
-              print(deviceToken);
+              sendPushMessage(deviceToken, "Your Order has been Done  ",
+                  "With ID ${widget.order.recivedId} ");
+              // print(deviceToken);
             },
+
             child: Text("Done")),
-        //mesoooooooooooooooooooooooooooooooooooooooooooo
+
+
       ]),
     );
   }
@@ -159,7 +183,8 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
 
   void sendPushMessage(String token, String body, String title) async {
     var serverToken =
-        "AAAAVLVNjEk:APA91bGVcOv-6S0OwzCBKD4eG20OD3W8zOXxTfCSeVIBtl6Sce7Pe4OcNkSV3jxhQ9XDB6Ix43jGdfrtJ3yRZUi1yppHAikqs_FkKGb1nJZebEp-na50STJf2I04XGbEpDdR2tPRnRjM";
+        "AAAAVLVNjEk:APA91bH1MVbh1rr5YkdyWIzvgnOfmD5eVH_C-wcOf_QKG5qaf4HJBPXVr6gTs3QUDjrCUuncLs-ieiZ_HTiCfWv55LFDb6kkZ6dLfIIeoZNg-GPq5cB6RrzHqsOiKlVax6ER25DqSM-c";
+
     try {
       await http.post(
         //finalcafeteriasystem

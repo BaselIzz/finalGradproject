@@ -1,5 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gradutionfinalv/constants/firebase.dart';
+import 'package:gradutionfinalv/model/cafeteria.dart';
 
 import 'package:gradutionfinalv/utils/splayTree.dart';
 
@@ -8,7 +9,9 @@ import 'package:get/get.dart';
 import 'package:gradutionfinalv/widget/custom_text.dart';
 
 import '../constants/controllers.dart';
+import '../controllers/MealDetailController.dart';
 import '../model/product.dart';
+import '../screens/mealDetailScreen.dart';
 
 class SingleProductWidget extends StatelessWidget {
   final ProductModel product;
@@ -49,7 +52,9 @@ class SingleProductWidget extends StatelessWidget {
             weight: FontWeight.bold,
           ),
           CustomText(
-            text: 'Time To Done: ${product.ProductTime}s',
+            text: orderController.productinoreder(product) > 0
+                ? 'Time To Done: ${int.parse(product.ProductTime) * orderController.productinoreder(product)}m'
+                : 'Time To Done: ${product.ProductTime} m',
             color: Colors.black,
           ),
           SizedBox(
@@ -73,43 +78,48 @@ class SingleProductWidget extends StatelessWidget {
                   weight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
-              IconButton(
-                  icon: Icon(Icons.add_shopping_cart),
-                  onPressed: () {
-                    cartController.addProductTocart(product);
-                    recommendationController.getRecomandedList(product);
-                    // productsController.splayTree.insert(product);
-                    //productsController.fillTree();
-                    caffetriaController
-                        .getCaffeteria(product.caffeteriaid)
-                        .splayTree
-                        .insert(product);
-                    List<ProductModel> listMeso = caffetriaController
-                        .getCaffeteria(product.caffeteriaid)
-                        .splayTree
-                        .topKFrequent(2);
-                    for (ProductModel s in listMeso) {
-                      print(s.ProductName);
-                    }
-                  })
+              Visibility(
+                visible: product.is_Exist,
+                child: IconButton(
+                    icon: const Icon(
+                      Icons.add_shopping_cart,
+                    ),
+                    onPressed: () {
+                      productsController.fillmapForTop10ForEachCafeteria();
+
+                      recommendationController.getRecomandedList(product);
+
+                      caffetriaController
+                          .getCaffeteria(product.caffeteriaid)
+                          .splayTree
+                          .insert(product);
+
+                      Get.lazyPut(
+                          () => MealDetailController(productModel: product));
+                      Get.to(() => MealDetailScreen());
+                      Addtofirebasefromtree(product);
+                    }),
+              )
             ],
           ),
         ],
       ),
     );
   }
+
+  void Addtofirebasefromtree(ProductModel product) {
+    List<ProductModel> prod;
+    prod = caffetriaController
+        .getCaffeteria(product.caffeteriaid)
+        .splayTree
+        .topKFrequent(3);
+
+    firebaseFirestore
+        .collection("TreeSplayList")
+        .doc(product.caffeteriaid)
+        .set({"List": prod.map((e) => e.toJson()).toList()});
+  }
 }
-
-
-
-/* 
-  Firestore.instance
-.collection('users').document('xsajAansjdna')
-.get()
-.then((value) =>
-print("Fetched ==>>>"+value.data["username"]));
-  
-  */

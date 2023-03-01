@@ -1,10 +1,12 @@
 import 'dart:convert';
-import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/constants/controllers.dart';
+import 'package:gradutionfinalv/model/SplayTreeDocs.dart';
 import 'package:gradutionfinalv/model/cafeteria.dart';
+import 'package:gradutionfinalv/model/product.dart';
 import 'package:http/http.dart';
 import '../constants/firebase.dart';
 import '../model/secdule.dart';
@@ -13,7 +15,7 @@ class CaffetriaController extends GetxController {
   static CaffetriaController instace = Get.find();
   RxList<CafeteriaModel> cafeterias = RxList<CafeteriaModel>([]);
   double tempOnCelsuis = 0.0;
-
+  RxList<SplayTreeDocs> prodFormSplayTree = RxList<SplayTreeDocs>([]);
   String collection = "cafeteria";
   @override
   void onReady() {
@@ -22,6 +24,13 @@ class CaffetriaController extends GetxController {
     cafeterias.bindStream(getAllcafeteria());
     getTemprture();
   }
+
+  Stream<List<SplayTreeDocs>> getProductFormsplayTree() => firebaseFirestore
+      .collection("TreeSplayList")
+      .snapshots()
+      .map((event) => event.docs
+          .map((item) => SplayTreeDocs.fromSnapShot(item.data()))
+          .toList());
 
   Stream<List<CafeteriaModel>> getAllcafeteria() => firebaseFirestore
       .collection(collection)

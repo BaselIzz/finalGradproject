@@ -30,7 +30,6 @@ class RecommendationController extends GetxController {
     for (var i = 0; i < productsController.products.length; i++) {
       List<ProductModel> data = <ProductModel>[];
       Map<String, int> set = Map();
-
       for (var j = 0; j < productsController.products.length; j++) {
         if (descriptionMatrix[i][j] >= 0.5 &&
             !(set.containsKey(productsController.products[j].ProductName))) {
@@ -64,4 +63,10 @@ class RecommendationController extends GetxController {
       debugPrint(e.message);
     }
   }
+
+/* 
+
+
+*/
+
 }

@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -18,6 +20,7 @@ import 'package:gradutionfinalv/widget/custom_btn.dart';
 import 'package:gradutionfinalv/widget/custom_text_from_field.dart';
 import 'package:gradutionfinalv/widget/dark_overlay.dart';
 import 'package:gradutionfinalv/widget/orderWidgetnew.dart';
+import 'package:http/http.dart' as http;
 
 import '../screens/addmanger_Screen.dart';
 import 'custom_text.dart';
@@ -59,8 +62,8 @@ class _AddProductWidgetState extends State<AddProductWidget> {
           right: 0,
           bottom: 36,
           child: Container(
-              margin: EdgeInsets.all(20),
-              padding: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Form(
                 key: formkey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -100,7 +103,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                         ),
                       ),
                     ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomButton(
@@ -138,7 +141,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                       fillColor: Colors.black,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   const Center(
@@ -152,7 +155,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                   Container(
                     margin: const EdgeInsets.all(20),
                     child: CustomTextFormField(
-                      keybordtype: TextInputType.numberWithOptions(
+                      keybordtype: const TextInputType.numberWithOptions(
                           signed: false, decimal: false),
                       icon: const Icon(Icons.table_chart),
                       hasPrefixIcon: true,
@@ -189,7 +192,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                     child: CustomTextFormField(
                       icon: const Icon(Icons.table_chart),
                       hasPrefixIcon: true,
-                      keybordtype: TextInputType.numberWithOptions(
+                      keybordtype: const TextInputType.numberWithOptions(
                           signed: false, decimal: true),
                       validator: (p0) {
                         const regx = r"/^\d+$/";
@@ -251,6 +254,11 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                               ProductTime: productTimeController.text,
                               description: productDescriptionConntroller.text);
                           productsController.addproduct(product);
+                          String name = caffetriaController
+                              .getCaffeterianame(product.caffeteriaid);
+                          sendMessageForAllusers(
+                              "$name Caffeteria have a new Meal wit Name : ${product.ProductName}",
+                              "New Meal!!!!!!!!");
                           productNameConntroller.clear();
                           priceController.clear();
                           productTimeController.clear();
@@ -282,6 +290,39 @@ class _AddProductWidgetState extends State<AddProductWidget> {
           "The photo Upladed Scessfully", "The photo Upladed Scessfully");
     } else {
       Get.snackbar("You Cant upload No photo", "Select Photofirst");
+    }
+  }
+
+  void sendMessageForAllusers(String body, String title) async {
+    var serverToken =
+        "AAAAVLVNjEk:APA91bGVcOv-6S0OwzCBKD4eG20OD3W8zOXxTfCSeVIBtl6Sce7Pe4OcNkSV3jxhQ9XDB6Ix43jGdfrtJ3yRZUi1yppHAikqs_FkKGb1nJZebEp-na50STJf2I04XGbEpDdR2tPRnRjM";
+    try {
+      await http.post(
+        Uri.parse("https://fcm.googleapis.com/fcm/send"),
+        headers: <String, String>{
+          "Content-Type": 'application/json',
+          'Authorization': 'key=$serverToken',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            "notification": <String, dynamic>{
+              "title": title,
+              "body": body,
+            },
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': "done",
+            },
+            "to": "/topics/birzeit"
+          },
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print("error push notification");
+      }
     }
   }
 }
