@@ -10,8 +10,7 @@ class SplashScreen extends StatelessWidget {
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
     return Scaffold(
-        body: Container(
-            child: Stack(
+        body: Stack(
       children: <Widget>[
         Positioned(
           top: 0.0,
@@ -52,6 +51,6 @@ class SplashScreen extends StatelessWidget {
               ),
             )),
       ],
-    )));
+    ));
   }
 }
