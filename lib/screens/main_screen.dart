@@ -1,4 +1,6 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/controllers/product_controller.dart';
@@ -22,6 +24,18 @@ class MainScreen extends StatefulWidget {
 int index = 0;
 
 class _MainScreenState extends State<MainScreen> {
+  // final FirebaseService firebaseService = FirebaseService();
+  @override
+  void initState() {
+    // firebaseService.initialize();
+    super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((value) {
+      if (!value) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+  }
+
   List<Widget> screens = [
     HomeScreen(),
     SearchScreen(),
@@ -53,6 +67,21 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+        id: 1,
+        channelKey: "alerts",
+        title: message.notification.title,
+        body: message.notification.body,
+      ));
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
     recommendationController.getissa();
     productsController.getmeso();
     productsController.fillmapForTop10ForEachCafeteria();

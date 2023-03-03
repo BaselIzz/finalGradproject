@@ -183,6 +183,7 @@ class CartController extends GetxController {
       // Increment the value of reciveId
       QuerySnapshot orders = await FirebaseFirestore.instance
           .collection("orders")
+          .where("cafeteriaid", isEqualTo: cart.cafeteriaId.toString())
           .orderBy("reciveId", descending: true)
           .limit(1)
           .get();
@@ -225,6 +226,7 @@ class CartController extends GetxController {
       // Increment the value of reciveId
       QuerySnapshot orders = await FirebaseFirestore.instance
           .collection("orders")
+          .where("cafeteriaid", isEqualTo: cart.cafeteriaId.toString())
           .orderBy("reciveId", descending: true)
           .limit(1)
           .get();

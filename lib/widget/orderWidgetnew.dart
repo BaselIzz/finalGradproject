@@ -78,21 +78,20 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
             ], rows: [
               DataRow(cells: [
                 DataCell(Text(
-                  "${widget.order.time}",
+                  widget.order.time
+                      .split(".")
+                      .getRange(0, 1)
+                      .toString()
+                      .replaceAll(RegExp("[()]"), ""),
                   style: const TextStyle(fontSize: 15),
                 )),
-                DataCell(Text("${widget.order.totalprice}"))
+                DataCell(Text(widget.order.totalprice))
               ])
             ]),
           ],
         ),
         const SizedBox(
           height: 10,
-        ),
-        CustomText(
-          text: "Addition = ${widget.order.order.first.notice}",
-          weight: FontWeight.w900,
-          size: 20,
         ),
         const SizedBox(
           height: 20,
@@ -104,7 +103,7 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
                     ? 10
                     : 80,
             horizontalMargin: 10,
-            border: TableBorder(
+            border: const TableBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             columns: const [
               DataColumn(
@@ -121,7 +120,7 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
               OrderItemModel orderr = widget.order.order[index];
               return DataRow(cells: [
                 DataCell(Text(
-                  orderr.name.toString(),
+                  orderr.name.toString().toLowerCase(),
                   style: const TextStyle(fontSize: 20),
                 )),
                 DataCell(Image.network(
@@ -142,13 +141,48 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
         const SizedBox(
           height: 40,
         ),
+        const SizedBox(
+          height: 20,
+        ),
+        DataTable(
+            columns: const [
+              DataColumn(
+                  label: Text(
+                "Name",
+                style: TextStyle(
+                  fontSize: 15,
+                ),
+              )),
+              DataColumn(
+                  label: Text(
+                "Addition",
+                style: TextStyle(fontSize: 15),
+              ))
+            ],
+            rows: List.generate(widget.order.order.length, (index) {
+              OrderItemModel orderr = widget.order.order[index];
+              return DataRow(cells: [
+                DataCell(Text(
+                  orderr.name.toString().toLowerCase(),
+                  style: TextStyle(fontSize: 12),
+                )),
+                DataCell(Text(
+                  "${orderr.notice.toLowerCase()}",
+                  style: TextStyle(fontSize: 12),
+                ))
+              ]);
+            })),
+        const SizedBox(
+          height: 60,
+        ),
         ElevatedButton(
             onPressed: () {
               orderController.updateState(widget.order.orderid);
               getDeviceToken(widget.order.userid);
-              sendPushMessage(deviceToken, "Your Order has been Done  ",
-                  "With ID ${widget.order.recivedId} ");
-              // print(deviceToken);
+              sendPushMessage(
+                  deviceToken,
+                  "Your Order has been Done With ID :${widget.order.recivedId}  ",
+                  "Notification From ${caffetriaController.getCaffeterianame(widget.order.cafeteriaid)}");
             },
 
             child: Text("Done")),

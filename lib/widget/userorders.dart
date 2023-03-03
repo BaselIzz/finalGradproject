@@ -21,7 +21,8 @@ class UserOrders extends StatelessWidget {
             text: "Items: ${getorders(order.order)}",
           ),
           CustomText(
-            text: "Date Order: ${order.time}",
+            text:
+                "Date Order: ${order.time.split(".").getRange(0, 1).toString().replaceAll(RegExp("[()]"), "")}",
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
