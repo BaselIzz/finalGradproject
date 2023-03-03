@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:gradutionfinalv/model/order.dart';
 import 'package:gradutionfinalv/model/product.dart';
@@ -38,19 +39,37 @@ class OrderController extends GetxController {
     return lenght;
   }
 
-  void reorder(orderModel order) {
-    var orderid = firebaseFirestore.collection(collection).doc();
-    orderid.set({
+  void reorder(orderModel order) async {
+    QuerySnapshot orders = await FirebaseFirestore.instance
+        .collection("orders")
+        .where("cafeteriaid", isEqualTo: order.cafeteriaid)
+        .orderBy("reciveId", descending: true)
+        .limit(1)
+        .get();
+    int maxReciveId = 0;
+    if (orders.docs.isNotEmpty) {
+      Map<String, dynamic> data =
+          orders.docs.first.data() as Map<String, dynamic>;
+      maxReciveId = data["reciveId"] as int;
+    }
+
+    // Create a new Firestore document for the reordered order with the new reciveId
+    CollectionReference ordersRef =
+        FirebaseFirestore.instance.collection("orders");
+    DocumentReference orderDocRef = ordersRef.doc();
+    await orderDocRef.set({
       "served": false,
       "cafeteriaid": order.cafeteriaid,
       "order": order.order.map((e) => e.Tojason()).toList(),
-      "orderid": orderid.id,
+      "orderid": orderDocRef.id,
       "createdby": order.createdby,
       "time": DateTime.now().toString(),
       "status": "notDone",
       "useremail": order.useremail,
       "totalprice": order.totalprice,
       "userid": order.userid,
+      "reciveId":
+          maxReciveId + 1, // Set the new reciveId for the reordered order
     });
   }
 
