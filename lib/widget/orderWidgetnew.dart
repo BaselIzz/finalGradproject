@@ -184,7 +184,10 @@ class _OrderwidgetnewState extends State<Orderwidgetnew> {
                   "Your Order has been Done With ID :${widget.order.recivedId}  ",
                   "Notification From ${caffetriaController.getCaffeterianame(widget.order.cafeteriaid)}");
             },
-            child: const Text("Done")),
+
+            child: Text("Done")),
+
+
       ]),
     );
   }
