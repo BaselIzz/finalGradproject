@@ -4,8 +4,8 @@ class StringConst {
   //strings
   static const String APP_NAME = "FoodyByte";
 
-  static const String Login_screen = "LoginScreen";
-  static const String Register_screen = "RegisterScreen";
+  static const String Login_screen = "Login";
+  static const String Register_screen = "Register";
   static const String FORGOT_PASSWORD_QUESTION = "Forgot Password?";
   static const String HAVE_AN_ACCOUNT_QUESTION = "Already have an account?";
   static const String FORGOT_PASSWORD = "Forgot Password";

@@ -19,6 +19,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
       name: "finalCafeteriaSystem");
+
   await AwesomeNotifications().initialize(
       null, //'resource://drawable/res_app_icon',//
       [

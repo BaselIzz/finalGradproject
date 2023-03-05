@@ -120,8 +120,6 @@ class _AddVendorWidgetState extends State<AddVendorWidget> {
         final regExp = RegExp(pattern);
         if (newvalue.isEmpty) {
           return 'please enter a password';
-        } else if (!regExp.hasMatch(newvalue)) {
-          return "your password mush have captal and number";
         } else {
           return null;
         }

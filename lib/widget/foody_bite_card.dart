@@ -72,15 +72,16 @@ class FoodyBiteCard extends StatelessWidget {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            Text(
-                              caffeteria.cafeteriaName,
-                              textAlign: TextAlign.left,
-                              style: Styles.customTitleTextStyle(
-                                color: AppColors.headingText,
-                                fontWeight: FontWeight.w600,
-                                fontSize: Sizes.TEXT_SIZE_20,
-                              ),
-                            ),
+                            // Container(decoration:,),
+                            // Text(
+                            //   "",
+                            //   textAlign: TextAlign.left,
+                            //   style: Styles.customTitleTextStyle(
+                            //     color: AppColors.headingText,
+                            //     fontWeight: FontWeight.w600,
+                            //     fontSize: Sizes.TEXT_SIZE_20,
+                            //   ),
+                            // ),
                             //          SizedBox(width: Sizes.WIDTH_4),
                             // CardTags(
                             //   title: caffeteria.name,

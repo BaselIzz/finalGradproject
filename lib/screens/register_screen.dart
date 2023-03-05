@@ -56,7 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: <Widget>[
                   _buildHeader(),
                   SizedBox(
-                    height: 16,
+                    height: 200,
                   ),
                   _buildForm(),
                   SizedBox(

@@ -88,7 +88,7 @@ class SingleProductWidget extends StatelessWidget {
                       Icons.add_shopping_cart,
                     ),
                     onPressed: () {
-                      productsController.fillmapForTop10ForEachCafeteria();
+                      //productsController.fillmapForTop10ForEachCafeteria();
 
                       recommendationController.getRecomandedList(product);
 
@@ -113,9 +113,9 @@ class SingleProductWidget extends StatelessWidget {
   void Addtofirebasefromtree(ProductModel product) {
     List<ProductModel> prod;
     prod = caffetriaController
-        .getCaffeteria(product.caffeteriaid)
+        .getCaffeteria(product.caffeteriaid.toString())
         .splayTree
-        .topKFrequent(3);
+        .topKFrequent(2);
 
     firebaseFirestore
         .collection("TreeSplayList")

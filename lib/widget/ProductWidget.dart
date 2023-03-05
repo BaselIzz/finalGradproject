@@ -6,6 +6,7 @@ import 'package:gradutionfinalv/controllers/SplayTreeController.dart';
 import 'package:gradutionfinalv/controllers/product_controller.dart';
 import 'package:gradutionfinalv/model/SplayTreeDocs.dart';
 import 'package:gradutionfinalv/widget/custom_text.dart';
+import 'package:gradutionfinalv/widget/mostViewedWidgetl.dart';
 import 'package:gradutionfinalv/widget/single_product.dart';
 
 import '../constants/controllers.dart';
@@ -40,21 +41,19 @@ class ProductsWidget extends StatelessWidget {
           height: 20,
         ),
         Obx(
-          () => Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: .65,
-              padding: const EdgeInsets.all(10),
-              mainAxisSpacing: 2,
-              crossAxisSpacing: 5,
+          () => SizedBox(
+            height: 180,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
               children: caffetriaController.prodFormSplayTree
                   .where((p0) => p0.SplayTreeDocsdlist.any(
                       (ProductModel p) => p.caffeteriaid == cafeteriaId))
                   .expand((SplayTreeDocs p0) => p0.SplayTreeDocsdlist)
                   .where((ProductModel p) => p.caffeteriaid == cafeteriaId)
                   .map((ProductModel product) {
-                return SingleProductWidget(
-                  product: product,
+                return MostViewedWidget(
+                  productModel: product,
+                  imagePath: product.ProductPhoto,
                 );
               }).toList(),
             ),
